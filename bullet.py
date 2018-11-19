@@ -27,6 +27,4 @@ class bullet(object):
 		self.obj_ax = 0		#Acceleration (0 if bullet speed is constant)
 		self.obj_ay = 0
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
-	#def destroy_self(self):
-		#idk how, but destroy if outside window or in contact with player/enemy
-		#not bullets thought, but if piercing, destroy only when out of window
+		self.destroy = True
