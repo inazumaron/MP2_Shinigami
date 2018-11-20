@@ -31,10 +31,12 @@ spr_btn_start = pyglet.sprite.Sprite(img=resources.button_start, x=300, y=200,gr
 
 #set up background
 game_background = pyglet.sprite.Sprite(img=resources.cover_image,x=300,y=400,group=group_background)
+game_background_2 = pyglet.sprite.Sprite(img=resources.bg_image,x=300,y=400,group=group_background)
 
 #game sprites
 spr_player = pyglet.sprite.Sprite(img=resources.player_image,x=300,y=50,group=group_foreground)
 spr_player_bullets = []
+spr_enemy_list = []
 	
 #Set cursor
 cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
@@ -42,12 +44,13 @@ cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
 
 @game_window.event
 def on_draw():
-	global game_screen, spr_player_bullets, Player_Bullets
+	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list
 	game_window.clear()
 	if game_screen == 0:
 		game_background.draw()
 		spr_btn_start.draw()
 	elif game_screen == 2:
+		game_background_2.draw()
 		spr_player.draw()
 		spr_player_bullets = []
 		for b in Player_Bullets:
@@ -63,7 +66,12 @@ def on_draw():
 				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_player,x=b.obj_x,y=b.obj_y,group=group_midground))
 		for b in spr_player_bullets:
 			b.draw()
-
+		spr_enemy_list = []
+		for b in Enemy_list:
+			if b.id == "easy_1":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
+		for b in spr_enemy_list:
+			b.draw()
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -131,6 +139,10 @@ def update_bullet_list(p_bullet,e_bullet):
 	Player_Bullets = p_bullet
 	Enemy_Bullets = e_bullet
 
+def update_enemy_list(e_list):
+	global Enemy_list
+	Enemy_list = e_list
+
 def keyboard(key): #When main checks if a certain key is being checked
 	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
 	if key == "up":
@@ -151,3 +163,10 @@ def keyboard(key): #When main checks if a certain key is being checked
 def get_player_coordinates():
 	global spr_player
 	return [spr_player.x, spr_player.y]
+
+def game_start():
+	global game_screen
+	if game_screen == 2:
+		return True
+	else:
+		return False
