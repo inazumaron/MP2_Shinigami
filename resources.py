@@ -39,3 +39,9 @@ bullet_piercing = pyglet.resource.image("bullet_i.png")
 center_image(bullet_piercing)
 bullet_exhoming = pyglet.resource.image("bullet_he.png")
 center_image(bullet_exhoming)
+
+enemy_1_image = pyglet.resource.image("enemy_small.png")
+center_image(enemy_1_image)
+
+bg_image = pyglet.resource.image("bg_1.png")
+center_image(bg_image)
