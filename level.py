@@ -1,13 +1,9 @@
 import pyglet
+import enemy as enemy#
 
-class level(object):
-	"""docstring for level"""
-	def __init__(self, arg):
-		super(level, self).__init__()
-		self.time_elapse = 0
-		self.difficulty = 0
-		
-
-def get_enemy(level,enemy_list):
+def get_enemy(time,difficulty,enemy_list):
 	#check level
+	if difficulty == 1:		#
+		if time%100 == 0:	#every 3 seconds
+			enemy_list.append(enemy.Enemy_1()) #
 	return enemy_list
