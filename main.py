@@ -2,6 +2,7 @@ import gui as gui
 import pyglet
 import ship as ship
 import bullet as bull
+import level as level
 
 #=====================================
 #Initializing variables for player input
@@ -84,6 +85,11 @@ Player_Bullets = []
 Enemy_Bullets = []
 Player_melee = []
 Enemy_list = []
+#======================================
+#Game stats (When in game/changable via options)
+#======================================
+time_elapse = 0
+difficulty = 1
 
 def player_movement():
 	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
@@ -104,17 +110,28 @@ def player_movement():
 def move_bullets():
 	global Player_Bullets, Enemy_Bullets
 	for bullet in range(0,len(Player_Bullets)):
-		Player_Bullets[bullet] = bull.bullet_action(Player_Bullets[bullet],Enemy_list)
+		Player_Bullets[bullet] = bull.bullet_action(Player_Bullets[bullet],Enemy_list,0)
 	for bullet in range(0,len(Enemy_Bullets)):
-		Enemy_Bullets[bullet] = bull.bullet_action(Enemy_Bullets[bullet],gui.get_player_coordinates())
+		Enemy_Bullets[bullet] = bull.bullet_action(Enemy_Bullets[bullet],gui.get_player_coordinates(),0)
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
+
+def move_enemies():
+	global Enemy_list
+	dead_enemy = []
+	for enemy in Enemy_list:
+		enemy = enemy.move()
+		if enemy.life <= 0:
+			dead_enemy.append(enemy)
+	for enemy in dead_enemy:
+		Enemy_list.remove(enemy)
+	gui.update_enemy_list(Enemy_list)
 
 #==========================================================================================#
 #									Input Check											   #
 #==========================================================================================#
 
 def check_input(dt):
-	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
+	global Enemy_list,time_elapse,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
 	key_left_press = gui.keyboard("left")
 	key_right_press = gui.keyboard("right")
 	key_up_press = gui.keyboard("up")
@@ -122,9 +139,17 @@ def check_input(dt):
 	key_melee_press = gui.keyboard("melee")
 	key_dash_press = gui.keyboard("dash")
 	key_gun_press = gui.keyboard("gun")
+	#===============================updating time related variables
+	if gui.game_start():
+		time_elapse += 1
+	else:
+		time_elapse = 0
 	#===============================checking other things
-	player_movement()
-	move_bullets()
+	if gui.game_start():
+		player_movement()
+		move_bullets()
+		move_enemies()
+		Enemy_list = level.get_enemy(time_elapse,1,Enemy_list)
 
 pyglet.clock.schedule_interval(check_input,1/30)
 
