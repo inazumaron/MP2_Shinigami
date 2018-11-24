@@ -109,10 +109,20 @@ def player_movement():
 
 def move_bullets():
 	global Player_Bullets, Enemy_Bullets
+	destroy_bullet = []
 	for bullet in range(0,len(Player_Bullets)):
 		Player_Bullets[bullet] = bull.bullet_action(Player_Bullets[bullet],Enemy_list,0)
+		if Player_Bullets[bullet].destroy:
+			destroy_bullet.append(Player_Bullets[bullet])
+	for bullet in destroy_bullet:
+		Player_Bullets.remove(bullet)
+	destroy_bullet = []
 	for bullet in range(0,len(Enemy_Bullets)):
 		Enemy_Bullets[bullet] = bull.bullet_action(Enemy_Bullets[bullet],gui.get_player_coordinates(),0)
+		if Enemy_Bullets[bullet].destroy:
+			destroy_bullet.append(Enemy_Bullets[bullet])
+	for bullet in destroy_bullet:
+		Enemy_Bullets.remove(bullet)
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
 
 def move_enemies():
