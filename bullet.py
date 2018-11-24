@@ -1,6 +1,7 @@
 import pyglet
+import collision as col
 
-def bullet_action(bullet,target_list):
+def bullet_action(bullet,target_list,time_elapse):
 	bullet.obj_x += bullet.obj_vx
 	bullet.obj_y += bullet.obj_vy
 	bullet.obj_vx += bullet.obj_ax
@@ -15,6 +16,12 @@ def bullet_action(bullet,target_list):
 	#if in collision:
 	#return bullet,target
 	#else:
+	if bullet.obj_y > 800:
+		bullet.destroy = True
+	for target in target_list:
+		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
+			bullet.destroy = True
+			target.life -= 100	#insta kill as of now
 	return bullet
 
 class bullet(object):
@@ -27,4 +34,4 @@ class bullet(object):
 		self.obj_ax = 0		#Acceleration (0 if bullet speed is constant)
 		self.obj_ay = 0
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
-		self.destroy = True
+		self.destroy = False
