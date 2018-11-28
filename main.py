@@ -1,9 +1,6 @@
 import gui as gui
 import pyglet
 import ship as ship
-import bullet as import gui as gui
-import pyglet
-import ship as ship
 import bullet as bull
 import level as level
 
