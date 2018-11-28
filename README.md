@@ -4,7 +4,8 @@ A simple bullet hell game
 Things to do:
 =======Within framework already========
 -better/smoother movement   (check at ship.py, ship_move)
--add dash (check at ship.py, ship_dash)
+-add dash (check at ship.py, ship_dash) #done
+      - add dash cooldown
 -add bullet cooldown (check at ship.py, ship_gun)
 
 -add homing feature to bullet (check bullet.py, bullet_action)
@@ -14,11 +15,11 @@ Things to do:
 
 -add more enemies (check enemy.py, make more classes)
       - give simple ai, on their movement pattern when called
-      -at main, still cant be called yet
+            -first enemy has zigzag ai #done
+                  -add shooting ai
       
 -level algorithm (cant be done w/o more enemies)
       -spawns more enemies as level progresses
-      -(still havent done much yet regarding this)
       
 -add home page for gui (at gui.py, @game_window.event, def on_draw...)
       -add a setting if game_screen == 1: it will draw a home screen
