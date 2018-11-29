@@ -1,7 +1,7 @@
 import math
 
 def get_distance(x1,y1,x2,y2):
-	distance = sqrt(((x1-x2)**2)+((y1-y2)**2))
+	distance = math.sqrt(((x1-x2)**2)+((y1-y2)**2))
 	return distance
 
 def check_collision(x1,x2,w1,w2,y1,y2,h1,h2):
