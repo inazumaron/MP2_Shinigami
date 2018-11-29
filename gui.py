@@ -42,6 +42,9 @@ spr_enemy_list = []
 cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
 #game_window.set_mouse_cursor(cursor)
 
+#dot sprite
+dot = pyglet.sprite.Sprite(img=resources.dot_blue, x=40, y=40, group=group_foreground)
+
 @game_window.event
 def on_draw():
 	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list
@@ -72,6 +75,7 @@ def on_draw():
 				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
 		for b in spr_enemy_list:
 			b.draw()
+	dot.draw()
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -163,6 +167,12 @@ def keyboard(key): #When main checks if a certain key is being checked
 def get_player_coordinates():
 	global spr_player
 	return [spr_player.x, spr_player.y]
+
+def change_dot(status):
+	if status:
+		dot.image = resources.dot_blue
+	else:
+		dot.image = resources.dot_red
 
 def game_start():
 	global game_screen

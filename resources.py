@@ -45,3 +45,8 @@ center_image(enemy_1_image)
 
 bg_image = pyglet.resource.image("bg_1.png")
 center_image(bg_image)
+
+dot_red = pyglet.resource.image("red_dot.png")
+center_image(dot_red)
+dot_blue = pyglet.resource.image("blue_dot.png")
+center_image(dot_blue)

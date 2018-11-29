@@ -40,6 +40,7 @@ shield_cooldown = 10
 #Initializing variables for gun
 #=====================================
 gun_cooldown = 10
+gun_in_cooldown = True #check if can fire
 gun_base_damage = 1
 gun_homing = False
 gun_piercing = False
@@ -50,7 +51,7 @@ gun_explosive_damage = gun_base_damage/2
 #=====================================
 #Initializing variables for melee
 #=====================================
-melee_cooldown = 1
+melee_cooldown = 60
 melee_base_damage = 10
 melee_reach = 1
 melee_range = 180
@@ -92,7 +93,7 @@ time_elapse = 0
 difficulty = 1
 
 def player_movement():
-	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
+	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets
 	temp = gui.get_player_coordinates()
 	x = temp[0]
 	y = temp[1]
@@ -101,11 +102,11 @@ def player_movement():
 		x = temp[0]
 		y = temp[1]
 		gui.player_move(x,y)
+	if time_elapse % gun_cooldown == 0: 			### Rate of fire as of now
+		gun_in_cooldown = True
 	if key_gun_press:
-		temp = ship.ship_move(x,y,key_left_press,key_right_press,key_up_press,key_down_press)
-		x = temp[0]
-		y = temp[1]
-		if time_elapse % gun_cooldown == 0: 			### Rate of fire as of now
+		if gun_in_cooldown:
+			gun_in_cooldown = False
 			Player_Bullets.append(ship.ship_gun(x,y,False))
 
 	if key_dash_press:
