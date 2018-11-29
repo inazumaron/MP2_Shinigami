@@ -1,4 +1,5 @@
 import pyglet
+import bullet as bull
 
 class Enemy_1(object):
 	"""docstring for Enemy_1"""
@@ -28,3 +29,14 @@ class Enemy_1(object):
 
 		self.y -= 0.75					###vertical speed as of now
 		return self						###very basic ai movement, still experimenting for additional movements
+
+	def shoot(self, time, player_point):
+		if time%20 == 0:
+			bullet = bull.bullet()
+			bullet.obj_x = self.x
+			bullet.obj_y = self.y
+			bullet.obj_vy = -10
+			bullet.obj_vx = (self.x-player_point["x"])/player_point["y"]
+			return bullet
+		else:
+			return None

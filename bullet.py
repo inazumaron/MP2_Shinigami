@@ -18,10 +18,23 @@ def bullet_action(bullet,target_list,time_elapse):
 	#else:
 	if bullet.obj_y > 800:
 		bullet.destroy = True
-	for target in target_list:
-		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
+	try:
+		for target in target_list:
+			if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
+				bullet.destroy = True
+				target.life -= 100	#insta kill as of now
+	except:
+		if col.get_distance(bullet.obj_x,bullet.obj_y,target[0],target[1]) <= 40:
 			bullet.destroy = True
-			target.life -= 100	#insta kill as of now
+			target.life -= 1
+
+	return bullet
+
+def bullet_action_no_collision(bullet):
+	bullet.obj_x += bullet.obj_vx
+	bullet.obj_y += bullet.obj_vy
+	bullet.obj_vx += bullet.obj_ax
+	bullet.obj_vy += bullet.obj_ay
 	return bullet
 
 class bullet(object):
