@@ -134,7 +134,7 @@ def move_bullets():
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
 
 def move_enemies():
-	global Enemy_list, Enemy_Bullets, time_elapse
+	global Enemy_list, Enemy_Bullets, time_elapse,Player_Bullets
 	temp = gui.get_player_coordinates()
 	plr_point = {"x":temp[0],"y":temp[1]}
 	dead_enemy = []
@@ -149,7 +149,9 @@ def move_enemies():
 		temp_bullet = enemy.shoot(time_elapse, plr_point)
 		if temp_bullet != None:
 			Enemy_Bullets.append(temp_bullet)
+			gui.change_dot(False)
 
+	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
 	gui.update_enemy_list(Enemy_list)
 
 #==========================================================================================#

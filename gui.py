@@ -37,6 +37,7 @@ game_background_2 = pyglet.sprite.Sprite(img=resources.bg_image,x=300,y=400,grou
 spr_player = pyglet.sprite.Sprite(img=resources.player_image,x=300,y=50,group=group_foreground)
 spr_player_bullets = []
 spr_enemy_list = []
+spr_enemy_bullets = []
 	
 #Set cursor
 cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
@@ -47,7 +48,7 @@ dot = pyglet.sprite.Sprite(img=resources.dot_blue, x=40, y=40, group=group_foreg
 
 @game_window.event
 def on_draw():
-	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list
+	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets
 	game_window.clear()
 	if game_screen == 0:
 		game_background.draw()
@@ -55,6 +56,8 @@ def on_draw():
 	elif game_screen == 2:
 		game_background_2.draw()
 		spr_player.draw()
+
+		#===================================Drawing Player bullets=======================
 		spr_player_bullets = []
 		for b in Player_Bullets:
 			if b.modifiers["homing"] and b.modifiers["explosive"]:
@@ -69,6 +72,23 @@ def on_draw():
 				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_player,x=b.obj_x,y=b.obj_y,group=group_midground))
 		for b in spr_player_bullets:
 			b.draw()
+
+		#===================================Drawing Enemy bullet==============================
+		spr_enemy_bullets = []
+		for b in Enemy_Bullets:
+			if b.modifiers["homing"] and b.modifiers["explosive"]:
+				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
+			elif b.modifiers["homing"]:
+				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_homing,x=b.obj_x,y=b.obj_y,group=group_midground))
+			elif b.modifiers["explosive"]:
+				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_explosive,x=b.obj_x,y=b.obj_y,group=group_midground))
+			elif b.modifiers["piercing"]:
+				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
+			else:
+				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_enemy,x=b.obj_x,y=b.obj_y,group=group_midground))
+		for b in spr_enemy_bullets:
+			b.draw()
+
 		spr_enemy_list = []
 		for b in Enemy_list:
 			if b.id == "easy_1":
