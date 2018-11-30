@@ -92,7 +92,7 @@ def on_draw():
 				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
 			else:
 				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_enemy,x=b.obj_x,y=b.obj_y,group=group_midground))
-			spr_enemy_bullets[-1].rotation=rotate_sprite(b.obj_vx, b.obj_vy)
+			spr_enemy_bullets[-1].rotation=(rotate_sprite(b.obj_vx, b.obj_vy)+180)/2
 		for b in spr_enemy_bullets:
 			b.draw()
 
@@ -220,8 +220,8 @@ def game_start():
 
 def rotate_sprite(vx, vy):
 	if vx != 0:
-		degree = math.degrees(math.atan(vy/vx))+180
-		if vy > 0:
+		degree = math.degrees(math.atan(vy/vx))
+		if vy < 0:
 			degree+=180
 		if vy == 0 and vx > 0:
 			degree = 90
