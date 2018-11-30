@@ -35,6 +35,9 @@ def bullet_action_no_collision(bullet):
 	bullet.obj_y += bullet.obj_vy
 	bullet.obj_vx += bullet.obj_ax
 	bullet.obj_vy += bullet.obj_ay
+
+	if bullet.obj_y < 0:
+		bullet.destroy = True
 	return bullet
 
 class bullet(object):
