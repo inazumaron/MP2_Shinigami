@@ -1,5 +1,6 @@
 import pyglet
 import resources
+import math
 from pyglet.window import *
 
 #Variables
@@ -46,6 +47,10 @@ cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
 #dot sprite
 dot = pyglet.sprite.Sprite(img=resources.dot_blue, x=40, y=40, group=group_foreground)
 
+#Delete this someday
+temp_x = 0
+temp_y = 0
+
 @game_window.event
 def on_draw():
 	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets
@@ -55,6 +60,7 @@ def on_draw():
 		spr_btn_start.draw()
 	elif game_screen == 2:
 		game_background_2.draw()
+		spr_player.rotation = rotate_sprite(temp_x,temp_y)
 		spr_player.draw()
 
 		#===================================Drawing Player bullets=======================
@@ -86,6 +92,7 @@ def on_draw():
 				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
 			else:
 				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_enemy,x=b.obj_x,y=b.obj_y,group=group_midground))
+			spr_enemy_bullets[-1].rotation=rotate_sprite(b.obj_vx, b.obj_vy)
 		for b in spr_enemy_bullets:
 			b.draw()
 
@@ -112,14 +119,19 @@ def on_mouse_press(x,y,button,modifiers):
 @game_window.event
 def on_key_press(symbol, modifiers):
 	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
+	global temp_y, temp_x
 	if symbol == key.W:
 		key_up_press = True
+		temp_y = 1
 	if symbol == key.A:
 		key_left_press = True
+		temp_x = -1
 	if symbol == key.S:
 		key_down_press = True
+		temp_y = -1
 	if symbol == key.D:
 		key_right_press = True
+		temp_x = 1
 	if symbol == key.R:
 		key_gun_press = True
 	if symbol == key.T:
@@ -130,14 +142,19 @@ def on_key_press(symbol, modifiers):
 @game_window.event
 def on_key_release(symbol, modifiers):
 	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
+	global temp_x,temp_y
 	if symbol == key.W:
 		key_up_press = False
+		temp_y =0
 	if symbol == key.A:
 		key_left_press = False
+		temp_x = 0
 	if symbol == key.S:
 		key_down_press = False
+		temp_y = 0
 	if symbol == key.D:
 		key_right_press = False
+		temp_x =0
 	if symbol == key.R:
 		key_gun_press = False
 	if symbol == key.T:
@@ -200,3 +217,12 @@ def game_start():
 		return True
 	else:
 		return False
+
+def rotate_sprite(vx, vy):
+	if vx != 0:
+		degree = math.degrees(math.atan(vy/vx))+180
+	elif vy>=0:
+		degree = 0
+	else:
+		degree = 180
+	return degree
