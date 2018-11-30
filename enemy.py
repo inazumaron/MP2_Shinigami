@@ -36,7 +36,7 @@ class Enemy_1(object):
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
 			bullet.obj_vy = -10
-			bullet.obj_vx = (self.x-player_point["x"])/player_point["y"]
+			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
 			return bullet
 		else:
 			return None

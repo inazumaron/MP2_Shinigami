@@ -221,6 +221,12 @@ def game_start():
 def rotate_sprite(vx, vy):
 	if vx != 0:
 		degree = math.degrees(math.atan(vy/vx))+180
+		if vy > 0:
+			degree+=180
+		if vy == 0 and vx > 0:
+			degree = 90
+		if vy == 0 and vx < 0:
+			degree = 270
 	elif vy>=0:
 		degree = 0
 	else:
