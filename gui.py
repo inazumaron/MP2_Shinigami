@@ -100,6 +100,24 @@ def on_draw():
 		for b in Enemy_list:
 			if b.id == "easy_1":
 				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "easy_2":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_2_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "easy_3":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_3_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "easy_4":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_4_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "med_1":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_5_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "med_2":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_6_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "med_3":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_7_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "hard_1":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_8_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "hard_2":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_9_image,x=b.x,y=b.y,group=group_foreground))
+			if b.id == "hard_3":
+				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_10_image,x=b.x,y=b.y,group=group_foreground))
 		for b in spr_enemy_list:
 			b.draw()
 	dot.draw()

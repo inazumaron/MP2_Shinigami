@@ -40,7 +40,7 @@ class Enemy_2(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "easy_2"
 		self.right = True
 		self.time = time
 
@@ -69,7 +69,7 @@ class Enemy_3(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "easy_3"
 		self.right = True
 		self.time = time
 
@@ -98,7 +98,7 @@ class Enemy_4(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "easy_4"
 		self.right = True
 		self.time = time
 
@@ -127,7 +127,7 @@ class Enemy_5(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "med_1"
 		self.right = True
 		self.time = time
 
@@ -157,7 +157,7 @@ class Enemy_6(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "med_2"
 		self.right = True
 
 	def move(self):		#AI of enemy
@@ -197,7 +197,7 @@ class Enemy_7(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "med_3"
 		self.right = False
 
 	def move(self):		#AI of enemy
@@ -237,7 +237,7 @@ class Enemy_8(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "hard_1"
 		self.right = False
 		self.down = True
 
@@ -289,7 +289,7 @@ class Enemy_9(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "hard_2"
 		self.right = True
 		self.down = True
 
@@ -341,7 +341,7 @@ class Enemy_10(object):
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_1"
+		self.id = "hard_3"
 		self.right = False
 		self.down = True
 
