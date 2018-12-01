@@ -23,17 +23,13 @@ def bullet_action(bullet,target_list,time_elapse):
 		elif closest.x > bullet.obj_x:
 			bullet.obj_vx += 1
 
-	if bullet.obj_y > 800:
+	if bullet.obj_y > 800 or bullet.obj_y < 0 or bullet.obj_x > 600 or bullet.obj_x < 0:
 		bullet.destroy = True
-	try:
-		for target in target_list:
-			if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
+	for target in target_list:
+		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
+			if bullet.modifiers["piercing"] == False:
 				bullet.destroy = True
-				target.life -= 100	#insta kill as of now
-	except:
-		if col.get_distance(bullet.obj_x,bullet.obj_y,target[0],target[1]) <= 40:
-			bullet.destroy = True
-			target.life -= 1
+			target.life -= 100	#insta kill as of now
 
 	return bullet
 
@@ -43,7 +39,7 @@ def bullet_action_no_collision(bullet):
 	bullet.obj_vx += bullet.obj_ax
 	bullet.obj_vy += bullet.obj_ay
 
-	if bullet.obj_y < 0:
+	if bullet.obj_y > 800 or bullet.obj_y < 0 or bullet.obj_x > 600 or bullet.obj_x < 0:
 		bullet.destroy = True
 	return bullet
 
@@ -62,5 +58,19 @@ class bullet(object):
 class melee(object):
 	def __init__(self):
 		super(melee, self).__init__()
-		self.arg = arg
-		
+		self.x = 0
+		self.y = 0
+		self.angle_1 = 270
+		self.angle_2 = 90
+		self.length = 1
+		self.duration = 30 #how long for one swing to do
+		self.damage = 10
+
+class explosion(object):
+	def __init__(self):
+		super(explosion, self).__init__()
+		self.x = 0
+		self.y = 0
+		self.radius = 10
+		self.damage = 1 #multiplied by duration
+		self.duration = 30 #1 sec

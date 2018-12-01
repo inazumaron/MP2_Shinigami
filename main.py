@@ -93,6 +93,9 @@ Enemy_list = []
 #======================================
 time_elapse = 0
 difficulty = 1
+score = 0
+pause = False
+plr_level = 1
 
 def player_movement():
 	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
@@ -122,13 +125,18 @@ def player_movement():
 			dash_first_use = False
 
 def move_bullets():
-	global Player_Bullets, Enemy_Bullets
+	global Player_Bullets, Enemy_Bullets, Explosion_list
 	destroy_bullet = []
 	for bullet in range(0,len(Player_Bullets)):
 		Player_Bullets[bullet] = bull.bullet_action(Player_Bullets[bullet],Enemy_list,0)
 		if Player_Bullets[bullet].destroy:
 			destroy_bullet.append(Player_Bullets[bullet])
 	for bullet in destroy_bullet:
+		if bullet.modifiers["explosive"]:
+			temp_exp = bull.explosion()
+			temp_exp.x = bullet.obj_x
+			temp_exp.y = bullet.obj_y
+			Explosion_list.append(temp_exp)
 		Player_Bullets.remove(bullet)
 	destroy_bullet = []
 	for bullet in range(0,len(Enemy_Bullets)):
@@ -163,12 +171,22 @@ def move_enemies():
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
 	gui.update_enemy_list(Enemy_list)
 
+def upgrade():
+	global time_elapse, plr_level, pause
+	if time_elapse//300 == plr_level:
+		pause = True
+		gui.paused(True)
+		plr_level += 1
+		if input() == "true":
+			pause = False
+			gui.paused(False)
+
 #==========================================================================================#
 #									Input Check											   #
 #==========================================================================================#
 
 def check_input(dt):
-	global Enemy_list,time_elapse,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
+	global pause,Enemy_list,time_elapse,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press
 	key_left_press = gui.keyboard("left")
 	key_right_press = gui.keyboard("right")
 	key_up_press = gui.keyboard("up")
@@ -178,16 +196,20 @@ def check_input(dt):
 	key_gun_press = gui.keyboard("gun")
 	#===============================updating time related variables
 	if gui.game_start():
-		time_elapse += 1
-
+		if pause == False:
+			time_elapse += 1
+		else:
+			time_elapse += 0
 	else:
 		time_elapse = 0
 	#===============================checking other things
 	if gui.game_start():
-		player_movement()
-		move_bullets()
-		move_enemies()
-		Enemy_list = level.get_enemy(time_elapse,1,Enemy_list)
+		upgrade()
+		if pause == False:
+			player_movement()
+			move_bullets()
+			move_enemies()
+			Enemy_list = level.get_enemy(time_elapse,1,Enemy_list)
 
 pyglet.clock.schedule_interval(check_input,1/30)
 

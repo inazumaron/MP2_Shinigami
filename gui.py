@@ -63,81 +63,83 @@ pause = False
 @game_window.event
 def on_draw():
 	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
-	game_window.clear()
 	if game_screen == 0:
+		game_window.clear()
 		game_background.draw()
 		spr_btn_start.draw()
 	elif game_screen == 1:
+		game_window.clear()
 		game_menu.draw()
 		spr_btn_continue.draw()
 		spr_btn_ng.draw()
 		spr_btn_score.draw()
 		spr_btn_help.draw()
 	elif game_screen == 2:
-		game_background_2.draw()
-		spr_player.rotation = rotate_sprite(temp_x,temp_y)
-		spr_player.scale = 0.5
-		spr_player.draw()
+		if pause == False:
+			game_window.clear()
+			game_background_2.draw()
+			spr_player.rotation = rotate_sprite(temp_x,temp_y)
+			spr_player.scale = 0.5
+			spr_player.draw()
 
-		#===================================Drawing Player bullets=======================
-		spr_player_bullets = []
-		for b in Player_Bullets:
-			if b.modifiers["homing"] and b.modifiers["explosive"]:
-				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["homing"]:
-				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_homing,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["explosive"]:
-				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_explosive,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["piercing"]:
-				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
-			else:
-				spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_player,x=b.obj_x,y=b.obj_y,group=group_midground))
-		for b in spr_player_bullets:
-			b.draw()
+			#===================================Drawing Player bullets=======================
+			spr_player_bullets = []
+			for b in Player_Bullets:
+				if b.modifiers["homing"] and b.modifiers["explosive"]:
+					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["homing"]:
+					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_homing,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["explosive"]:
+					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_explosive,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["piercing"]:
+					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
+				else:
+					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_player,x=b.obj_x,y=b.obj_y,group=group_midground))
+			for b in spr_player_bullets:
+				b.draw()
 
-		#===================================Drawing Enemy bullet==============================
-		spr_enemy_bullets = []
-		for b in Enemy_Bullets:
-			if b.modifiers["homing"] and b.modifiers["explosive"]:
-				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["homing"]:
-				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_homing,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["explosive"]:
-				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_explosive,x=b.obj_x,y=b.obj_y,group=group_midground))
-			elif b.modifiers["piercing"]:
-				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
-			else:
-				spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_enemy,x=b.obj_x,y=b.obj_y,group=group_midground))
-			spr_enemy_bullets[-1].rotation=(rotate_sprite(b.obj_vx, b.obj_vy)+180)/2
-		for b in spr_enemy_bullets:
-			b.draw()
+			#===================================Drawing Enemy bullet==============================
+			spr_enemy_bullets = []
+			for b in Enemy_Bullets:
+				if b.modifiers["homing"] and b.modifiers["explosive"]:
+					spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["homing"]:
+					spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_homing,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["explosive"]:
+					spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_explosive,x=b.obj_x,y=b.obj_y,group=group_midground))
+				elif b.modifiers["piercing"]:
+					spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_piercing,x=b.obj_x,y=b.obj_y,group=group_midground))
+				else:
+					spr_enemy_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_enemy,x=b.obj_x,y=b.obj_y,group=group_midground))
+				spr_enemy_bullets[-1].rotation=(rotate_sprite(b.obj_vx, b.obj_vy)+180)/2
+			for b in spr_enemy_bullets:
+				b.draw()
 
-		spr_enemy_list = []
-		for b in Enemy_list:
-			if b.id == "easy_1":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "easy_2":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_2_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "easy_3":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_3_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "easy_4":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_4_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "med_1":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_5_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "med_2":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_6_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "med_3":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_7_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "hard_1":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_8_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "hard_2":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_9_image,x=b.x,y=b.y,group=group_foreground))
-			if b.id == "hard_3":
-				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_10_image,x=b.x,y=b.y,group=group_foreground))
-		for b in spr_enemy_list:
-			b=shrink_2(b)
-			b.draw()
-	dot.draw()
+			spr_enemy_list = []
+			for b in Enemy_list:
+				if b.id == "easy_1":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "easy_2":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_2_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "easy_3":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_3_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "easy_4":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_4_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "med_1":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_5_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "med_2":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_6_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "med_3":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_7_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "hard_1":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_8_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "hard_2":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_9_image,x=b.x,y=b.y,group=group_foreground))
+				if b.id == "hard_3":
+					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_10_image,x=b.x,y=b.y,group=group_foreground))
+			for b in spr_enemy_list:
+				b=shrink_2(b)
+				b.draw()
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -305,3 +307,7 @@ def shrink(spr):
 def shrink_2(spr):
 	spr.scale = 0.5
 	return spr
+
+def paused(stat):
+	global pause
+	pause = stat
