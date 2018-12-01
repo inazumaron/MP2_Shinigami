@@ -48,3 +48,9 @@ class bullet(object):
 		self.obj_ay = 0
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
 		self.destroy = False
+
+class melee(object):
+	def __init__(self):
+		super(melee, self).__init__()
+		self.arg = arg
+		
