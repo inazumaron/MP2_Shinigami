@@ -63,9 +63,11 @@ melee_deflect = False
 #=====================================
 #Initializing variables for dash
 #=====================================
-dash_cooldown = 1
+dash_cooldown = 150		###5 secs
 dash_range = 5
 dash_invulnerable = False
+dash_time = 0
+dash_first_use = True
 #=====================================
 #Initializing variables for misc
 #=====================================
@@ -93,7 +95,7 @@ time_elapse = 0
 difficulty = 1
 
 def player_movement():
-	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets
+	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
 	temp = gui.get_player_coordinates()
 	x = temp[0]
 	y = temp[1]
@@ -110,10 +112,14 @@ def player_movement():
 			Player_Bullets.append(ship.ship_gun(x,y,False))
 
 	if key_dash_press:
-		temp = ship.ship_dash(x,y,key_left_press,key_right_press,key_up_press,key_down_press, 0)
-		x = temp[0]
-		y = temp[1]
-		gui.player_move(x,y)
+		now = time_elapse
+		if now - dash_time >= dash_cooldown or dash_first_use:
+			dash_time = now
+			temp = ship.ship_dash(x,y,key_left_press,key_right_press,key_up_press,key_down_press, 0)
+			x = temp[0]
+			y = temp[1]
+			gui.player_move(x,y)
+			dash_first_use = False
 
 def move_bullets():
 	global Player_Bullets, Enemy_Bullets
@@ -142,6 +148,9 @@ def move_enemies():
 		enemy = enemy.move()
 		if enemy.life <= 0:
 			dead_enemy.append(enemy)
+	for enemy in Enemy_list:
+		if enemy.y < -50:
+			dead_enemy.append(enemy)				
 	for enemy in dead_enemy:
 		Enemy_list.remove(enemy)
 
@@ -170,6 +179,7 @@ def check_input(dt):
 	#===============================updating time related variables
 	if gui.game_start():
 		time_elapse += 1
+
 	else:
 		time_elapse = 0
 	#===============================checking other things
