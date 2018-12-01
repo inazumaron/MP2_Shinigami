@@ -58,6 +58,8 @@ dot = pyglet.sprite.Sprite(img=resources.dot_blue, x=40, y=40, group=group_foreg
 temp_x = 0
 temp_y = 0
 
+pause = False
+
 @game_window.event
 def on_draw():
 	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
@@ -74,6 +76,7 @@ def on_draw():
 	elif game_screen == 2:
 		game_background_2.draw()
 		spr_player.rotation = rotate_sprite(temp_x,temp_y)
+		spr_player.scale = 0.5
 		spr_player.draw()
 
 		#===================================Drawing Player bullets=======================
@@ -132,6 +135,7 @@ def on_draw():
 			if b.id == "hard_3":
 				spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_10_image,x=b.x,y=b.y,group=group_foreground))
 		for b in spr_enemy_list:
+			b=shrink_2(b)
 			b.draw()
 	dot.draw()
 @game_window.event
@@ -296,4 +300,8 @@ def enlarge(spr):
 
 def shrink(spr):
 	spr.scale = 1
+	return spr
+
+def shrink_2(spr):
+	spr.scale = 0.5
 	return spr
