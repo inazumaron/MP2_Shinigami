@@ -17,9 +17,14 @@ center_image(cover_image)
 
 button_start = pyglet.resource.image("start.png")
 center_image(button_start)
-
 button_continue = pyglet.resource.image("continue.png")
 center_image(button_continue)
+button_ng = pyglet.resource.image("ng.png")
+center_image(button_ng)
+button_score = pyglet.resource.image("score.png")
+center_image(button_score)
+button_help = pyglet.resource.image("help.png")
+center_image(button_help)
 
 cursor_1 = pyglet.resource.image("cursor.png")
 center_image(cursor_1)
@@ -63,6 +68,8 @@ center_image(enemy_10_image)
 
 bg_image = pyglet.resource.image("bg_1.png")
 center_image(bg_image)
+menu_image = pyglet.resource.image("menu_1.png")
+center_image(menu_image)
 
 dot_red = pyglet.resource.image("red_dot.png")
 center_image(dot_red)

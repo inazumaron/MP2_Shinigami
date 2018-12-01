@@ -29,10 +29,17 @@ group_foreground = pyglet.graphics.OrderedGroup(2)
 
 #Start/Continue button
 spr_btn_start = pyglet.sprite.Sprite(img=resources.button_start, x=300, y=200,group=group_foreground)
+spr_btn_continue = pyglet.sprite.Sprite(img=resources.button_continue, x=120, y=640,group=group_foreground)
+spr_btn_ng= pyglet.sprite.Sprite(img=resources.button_ng, x=120, y=550,group=group_foreground)
+spr_btn_score = pyglet.sprite.Sprite(img=resources.button_score, x=120, y=460,group=group_foreground)
+spr_btn_help = pyglet.sprite.Sprite(img=resources.button_help, x=120, y=370,group=group_foreground)
 
 #set up background
 game_background = pyglet.sprite.Sprite(img=resources.cover_image,x=300,y=400,group=group_background)
 game_background_2 = pyglet.sprite.Sprite(img=resources.bg_image,x=300,y=400,group=group_background)
+
+#menu background
+game_menu = pyglet.sprite.Sprite(img=resources.menu_image,x=300,y=400,group=group_background)
 
 #game sprites
 spr_player = pyglet.sprite.Sprite(img=resources.player_image,x=300,y=50,group=group_foreground)
@@ -53,11 +60,17 @@ temp_y = 0
 
 @game_window.event
 def on_draw():
-	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets
+	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	game_window.clear()
 	if game_screen == 0:
 		game_background.draw()
 		spr_btn_start.draw()
+	elif game_screen == 1:
+		game_menu.draw()
+		spr_btn_continue.draw()
+		spr_btn_ng.draw()
+		spr_btn_score.draw()
+		spr_btn_help.draw()
 	elif game_screen == 2:
 		game_background_2.draw()
 		spr_player.rotation = rotate_sprite(temp_x,temp_y)
@@ -129,10 +142,36 @@ def on_mouse_press(x,y,button,modifiers):
 	global game_screen
 	if game_screen == 0:
 		if abs(x-spr_btn_start.x)<50 and abs(y-spr_btn_start.y)<40:
-			#Go to home screen (thou this will actually lead to game screen, just change when home is available na)
+			game_screen = 1
+	elif game_screen == 1:
+		if abs(x-spr_btn_ng.x)<50 and abs(y-spr_btn_ng.y)<40:
 			game_screen = 2
-			#----------Fix this to 1 later-----------------#
-			print(game_screen)
+
+@game_window.event
+def on_mouse_motion(x,y,dx,dy):
+	global game_screen, spr_btn_start, spr_btn_ng, spr_btn_continue, spr_btn_score, spr_btn_help
+	if game_screen == 0:
+		if abs(x-spr_btn_start.x)<50 and abs(y-spr_btn_start.y)<40:
+			spr_btn_start = enlarge(spr_btn_start)
+		else:
+			spr_btn_start = shrink(spr_btn_start)
+	if game_screen == 1:
+		if abs(x-spr_btn_ng.x)<50 and abs(y-spr_btn_ng.y)<40:
+			spr_btn_ng = enlarge(spr_btn_ng)
+		else:
+			spr_btn_ng = shrink(spr_btn_ng)
+		if abs(x-spr_btn_continue.x)<50 and abs(y-spr_btn_continue.y)<40:
+			spr_btn_continue = enlarge(spr_btn_continue)
+		else:
+			spr_btn_continue = shrink(spr_btn_continue)
+		if abs(x-spr_btn_score.x)<50 and abs(y-spr_btn_score.y)<40:
+			spr_btn_score = enlarge(spr_btn_score)
+		else:
+			spr_btn_score = shrink(spr_btn_score)
+		if abs(x-spr_btn_help.x)<50 and abs(y-spr_btn_help.y)<40:
+			spr_btn_help = enlarge(spr_btn_help)
+		else:
+			spr_btn_help = shrink(spr_btn_help)
 
 @game_window.event
 def on_key_press(symbol, modifiers):
@@ -250,3 +289,11 @@ def rotate_sprite(vx, vy):
 	else:
 		degree = 180
 	return degree
+
+def enlarge(spr):
+	spr.scale = 1.1
+	return spr
+
+def shrink(spr):
+	spr.scale = 1
+	return spr
