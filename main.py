@@ -88,6 +88,7 @@ Player_Bullets = []
 Enemy_Bullets = []
 Player_melee = []
 Enemy_list = []
+Explosion_list = []
 #======================================
 #Game stats (When in game/changable via options)
 #======================================
@@ -158,10 +159,13 @@ def move_bullets():
 			destroy_bullet.append(Enemy_Bullets[bullet])
 	for bullet in destroy_bullet:
 		Enemy_Bullets.remove(bullet)
-	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
+
+	for exp in Explosion_list:
+		bull.explosion_action(exp,Enemy_list)
+	gui.update_bullet_list(Player_Bullets,Enemy_Bullets,Explosion_list)
 
 def move_enemies():
-	global Enemy_list, Enemy_Bullets, time_elapse,Player_Bullets
+	global Enemy_list, Enemy_Bullets, time_elapse,Player_Bullets, Explosion_list
 	temp = gui.get_player_coordinates()
 	plr_point = {"x":temp[0],"y":temp[1]}
 	dead_enemy = []
@@ -181,7 +185,7 @@ def move_enemies():
 			Enemy_Bullets.append(temp_bullet)
 			gui.change_dot(False)
 
-	gui.update_bullet_list(Player_Bullets,Enemy_Bullets)
+	gui.update_bullet_list(Player_Bullets,Enemy_Bullets, Explosion_list)
 	gui.update_enemy_list(Enemy_list)
 
 def upgrade():

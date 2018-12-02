@@ -29,7 +29,7 @@ def bullet_action(bullet,target_list,time_elapse):
 		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
 			if bullet.modifiers["piercing"] == False:
 				bullet.destroy = True
-			target.life -= 100	#insta kill as of now
+			target.life -= 10	#insta kill as of now
 
 	return bullet
 
@@ -45,6 +45,11 @@ def bullet_action_no_collision(bullet):
 
 def melee_action():
 	pass
+
+def explosion_action(exp, target_list):
+	for target in target_list:
+		if col.get_distance(target.x,target.y,exp.x,exp.y) <= 40 + 50*(exp.radius*(exp.timer/exp.duration)):
+			target.life -= exp.damage
 
 class bullet(object):
 	def __init__(self):
@@ -63,6 +68,7 @@ class explosion(object):
 		super(explosion, self).__init__()
 		self.x = 0
 		self.y = 0
-		self.radius = 10
+		self.radius = 1
 		self.damage = 1 #multiplied by duration
 		self.duration = 30 #1 sec
+		self.timer = 1 #counts from 1 to duration

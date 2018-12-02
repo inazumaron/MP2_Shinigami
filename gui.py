@@ -18,6 +18,7 @@ Player_Bullets = []
 Enemy_Bullets = []
 player_melee = True
 Enemy_list = []
+Explosion_list = []
 
 #Set up window
 game_window = pyglet.window.Window(600,800)
@@ -63,7 +64,7 @@ pause = False
 
 @game_window.event
 def on_draw():
-	global player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
+	global Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
 		game_background.draw()
@@ -88,6 +89,7 @@ def on_draw():
 			#===================================Drawing Player bullets=======================
 			spr_player_bullets = []
 			for b in Player_Bullets:
+				b.modifiers["explosive"] = True
 				if b.modifiers["homing"] and b.modifiers["explosive"]:
 					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
 				elif b.modifiers["homing"]:
@@ -143,6 +145,21 @@ def on_draw():
 			for b in spr_enemy_list:
 				b=shrink_2(b)
 				b.draw()
+
+			spr_explosion_list = []
+			remove_explosion_list = []
+			for b in Explosion_list:
+				spr_explosion_list.append(pyglet.sprite.Sprite(img=resources.bullet_explosion, x=b.x,y=b.y,group=group_foreground))
+				spr_explosion_list[-1].scale = b.radius*(b.timer/b.duration)
+				if b.timer>b.duration:
+					remove_explosion_list.append(b)
+				else:
+					b.timer += 1
+			for b in remove_explosion_list:
+				Explosion_list.remove(b)
+			for b in spr_explosion_list:
+				b.draw()
+
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -243,10 +260,11 @@ def player_move(x,y):
 	spr_sword.x = x+30
 	spr_sword.y = y
 
-def update_bullet_list(p_bullet,e_bullet):
-	global Player_Bullets, Enemy_Bullets
+def update_bullet_list(p_bullet,e_bullet,explosion):
+	global Player_Bullets, Enemy_Bullets, Explosion_list
 	Player_Bullets = p_bullet
 	Enemy_Bullets = e_bullet
+	Explosion_list = explosion
 
 def update_enemy_list(e_list):
 	global Enemy_list
@@ -311,6 +329,10 @@ def shrink(spr):
 
 def shrink_2(spr):
 	spr.scale = 0.6
+	return spr
+
+def var_shrink(spr,var):
+	spr.scale = var
 	return spr
 
 def paused(stat):
