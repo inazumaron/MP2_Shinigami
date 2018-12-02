@@ -16,7 +16,7 @@ key_dash_press = False
 
 Player_Bullets = []
 Enemy_Bullets = []
-Player_melee = []
+player_melee = True
 Enemy_list = []
 
 #Set up window
@@ -43,6 +43,7 @@ game_menu = pyglet.sprite.Sprite(img=resources.menu_image,x=300,y=400,group=grou
 
 #game sprites
 spr_player = pyglet.sprite.Sprite(img=resources.player_image,x=300,y=50,group=group_foreground)
+spr_sword = pyglet.sprite.Sprite(img=resources.player_sword, x=330,y=50, group=group_foreground)
 spr_player_bullets = []
 spr_enemy_list = []
 spr_enemy_bullets = []
@@ -62,7 +63,7 @@ pause = False
 
 @game_window.event
 def on_draw():
-	global game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
+	global player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
 		game_background.draw()
@@ -79,8 +80,10 @@ def on_draw():
 			game_window.clear()
 			game_background_2.draw()
 			spr_player.rotation = rotate_sprite(temp_x,temp_y)
-			spr_player.scale = 0.5
+			spr_player.scale = 0.75
 			spr_player.draw()
+			if player_melee:
+				spr_sword.draw()
 
 			#===================================Drawing Player bullets=======================
 			spr_player_bullets = []
@@ -234,9 +237,11 @@ def recieve_vars(game_screen_val):
 	game_screen = game_screen_val
 
 def player_move(x,y):
-	global spr_player
+	global spr_player, spr_sword
 	spr_player.x = x
 	spr_player.y = y
+	spr_sword.x = x+30
+	spr_sword.y = y
 
 def update_bullet_list(p_bullet,e_bullet):
 	global Player_Bullets, Enemy_Bullets
@@ -305,9 +310,20 @@ def shrink(spr):
 	return spr
 
 def shrink_2(spr):
-	spr.scale = 0.5
+	spr.scale = 0.6
 	return spr
 
 def paused(stat):
 	global pause
 	pause = stat
+
+def update_ship_stat(shield, dash, sword):
+	global spr_player, player_melee
+	if shield and dash:
+		spr_player.image = resources.player_image_shield_dash
+	elif shield:
+		spr_player.image = resources.player_image_shield
+	elif dash:
+		spr_player.image = resources.player_image_dash
+	else:
+		spr_player.image = resources.player_image

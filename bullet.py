@@ -43,6 +43,9 @@ def bullet_action_no_collision(bullet):
 		bullet.destroy = True
 	return bullet
 
+def melee_action():
+	pass
+
 class bullet(object):
 	def __init__(self):
 		super(bullet, self).__init__()
@@ -54,17 +57,6 @@ class bullet(object):
 		self.obj_ay = 0
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
 		self.destroy = False
-
-class melee(object):
-	def __init__(self):
-		super(melee, self).__init__()
-		self.x = 0
-		self.y = 0
-		self.angle_1 = 270
-		self.angle_2 = 90
-		self.length = 1
-		self.duration = 30 #how long for one swing to do
-		self.damage = 10
 
 class explosion(object):
 	def __init__(self):

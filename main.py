@@ -96,9 +96,11 @@ difficulty = 1
 score = 0
 pause = False
 plr_level = 1
+dash_now = 0
+sword_now = 0
 
 def player_movement():
-	global key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
+	global ship_melee,ship_shield,ship_dash,dash_now,sword_now,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
 	temp = gui.get_player_coordinates()
 	x = temp[0]
 	y = temp[1]
@@ -115,14 +117,25 @@ def player_movement():
 			Player_Bullets.append(ship.ship_gun(x,y,False))
 
 	if key_dash_press:
-		now = time_elapse
-		if now - dash_time >= dash_cooldown or dash_first_use:
-			dash_time = now
+		dash_now = time_elapse
+		if ship_dash:
 			temp = ship.ship_dash(x,y,key_left_press,key_right_press,key_up_press,key_down_press, 0)
 			x = temp[0]
 			y = temp[1]
 			gui.player_move(x,y)
 			dash_first_use = False
+			ship_dash = False
+	if time_elapse-dash_now >= dash_cooldown or dash_first_use:
+		ship_dash = True
+
+	if key_melee_press:
+		sword_now = time_elapse
+		if ship_melee:
+			
+			ship_melee = False
+	if time_elapse-sword_now >= melee_cooldown:
+		ship_melee = True
+	gui.update_ship_stat(ship_shield,ship_dash,ship_melee)
 
 def move_bullets():
 	global Player_Bullets, Enemy_Bullets, Explosion_list
@@ -173,7 +186,7 @@ def move_enemies():
 
 def upgrade():
 	global time_elapse, plr_level, pause
-	if time_elapse//300 == plr_level:
+	if time_elapse//1000 == plr_level:
 		pause = True
 		gui.paused(True)
 		plr_level += 1

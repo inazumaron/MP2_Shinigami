@@ -29,8 +29,17 @@ center_image(button_help)
 cursor_1 = pyglet.resource.image("cursor.png")
 center_image(cursor_1)
 
-player_image = pyglet.resource.image("player_small.png")
+player_image = pyglet.resource.image("player_small_no_sword.png")
 center_image(player_image)
+player_image_shield = pyglet.resource.image("player_shield.png")
+center_image(player_image_shield)
+player_image_dash = pyglet.resource.image("player_dash.png")
+center_image(player_image_dash)
+player_image_shield_dash = pyglet.resource.image("player_shield_dash.png")
+center_image(player_image_shield_dash)
+player_sword = pyglet.resource.image("sword.png")
+player_sword.anchor_y = 0
+player_sword.anchor_x = player_sword.width / 2
 
 bullet_enemy = pyglet.resource.image("bullet_e.png")
 center_image(bullet_enemy)
