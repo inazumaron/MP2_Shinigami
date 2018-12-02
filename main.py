@@ -131,7 +131,7 @@ def player_movement():
 	if key_melee_press:
 		sword_now = time_elapse
 		if ship_melee:
-			
+			#do something
 			ship_melee = False
 	if time_elapse-sword_now >= melee_cooldown:
 		ship_melee = True
@@ -186,7 +186,7 @@ def move_enemies():
 
 def upgrade():
 	global time_elapse, plr_level, pause
-	if time_elapse//1000 == plr_level:
+	if time_elapse//10000 == plr_level:
 		pause = True
 		gui.paused(True)
 		plr_level += 1
