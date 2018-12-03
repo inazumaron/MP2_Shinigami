@@ -1,5 +1,6 @@
 import pyglet
 import bullet as bull
+import random
 
 class Enemy_1(object):
 	"""docstring for Enemy_1"""
@@ -63,7 +64,7 @@ class Enemy_2(object):
 			self.up = False
 			self.left = True
 			self.x -= 20
-		return self	
+		return self
 
 	def shoot(self, time, player_point):
 		if time%20 == 0:
@@ -93,7 +94,7 @@ class Enemy_3(object):
 	def move(self):		#AI of enemy
 		#always moves down but then chooses randomly to move left or right
 		self.y -= 15	
-		move = random.sample(['left','right'])
+		move = random.sample(['left','right'],1)
 		if move == 'left':
 			self.x -= 15
 		if move == 'right':
