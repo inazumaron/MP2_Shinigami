@@ -67,7 +67,7 @@ class Enemy_2(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -80,29 +80,24 @@ class Enemy_2(object):
 class Enemy_3(object):
 	def __init__(self, time):		#
 		super(Enemy_3, self).__init__()
-		self.x = 300
-		self.y = 830
+		self.x = 630
+		self.y = 200
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
 		self.id = "easy_3"
-		self.right = True
+		self.left = True
 		self.time = time
 
 
 	def move(self):		#AI of enemy
-		#always moves down but then chooses randomly to move left or right
-		self.y -= 5	
-		move = random.sample(['left','right'],1)
-		if move == ['left']:
-			self.x -= 5
-		if move == ['right']:
-			self.x += 5		
-		return self	
+		self.y += 5	
+		self.x -= 5
+		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -115,23 +110,24 @@ class Enemy_3(object):
 class Enemy_4(object):
 	def __init__(self, time):		#
 		super(Enemy_4, self).__init__()
-		self.x = 425
-		self.y = 830
+		self.x = -30
+		self.y = 200
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_4"
+		self.id = "easy_3"
 		self.right = True
 		self.time = time
 
 
-	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
-		return self	
+	def move(self):		#AI of enemy
+		self.y += 5	
+		self.x += 5
+		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
