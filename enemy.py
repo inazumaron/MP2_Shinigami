@@ -34,8 +34,8 @@ class Enemy_1(object):
 class Enemy_2(object):
 	def __init__(self, time):		#
 		super(Enemy_2, self).__init__()
-		self.x = 175
-		self.y = 830
+		self.x = 300
+		self.y = 850
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
@@ -45,8 +45,12 @@ class Enemy_2(object):
 		self.time = time
 
 
-	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
+	def move(self):		#AI of enemy
+		if self.y > 50:
+			self.y -= 30
+		else:
+			self.left = True
+			self.x += 30
 		return self	
 
 	def shoot(self, time, player_point):
