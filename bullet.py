@@ -62,6 +62,7 @@ class bullet(object):
 		self.obj_ay = 0
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
 		self.destroy = False
+		self.damage = 10
 
 class explosion(object):
 	def __init__(self):

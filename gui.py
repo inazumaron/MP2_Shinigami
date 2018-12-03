@@ -62,6 +62,8 @@ temp_y = 0
 
 pause = False
 
+sword_obj = 0
+
 @game_window.event
 def on_draw():
 	global Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help

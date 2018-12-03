@@ -8,13 +8,13 @@ def ship_move(x,y,left,right,up,down):
 	#check if outside boundary
 
 	if left and 50 < x: ###ship boundaries
-		x-=5
+		x-=10
 	elif right and x < 550:
-		x+=5
+		x+=10
 	if up and y < 750:
-		y+=5
+		y+=10
 	elif down and 50 < y:
-		y-=5
+		y-=10
 	return [x,y]
 
 def ship_gun(x,y,modifiers):

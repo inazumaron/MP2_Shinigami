@@ -3,6 +3,7 @@ import pyglet
 import ship as ship
 import bullet as bull
 import level as level
+import collision as col
 
 #=====================================
 #Initializing variables for player input
@@ -29,9 +30,11 @@ ship_dash = True
 #=====================================
 #Initializing variables for shield
 #=====================================
-shield_life = 10
-shield_regen = 1
-shield_cooldown = 10
+shield_life = 50
+shield_regen = .1
+shield_cooldown = 90
+shield_broke = 0
+shield_max_life = 50
 '''
         shiled_regen - rate of of shield recovery if not broken
         shield_cooldwon - rate before shield reactivate when broken
@@ -198,6 +201,26 @@ def upgrade():
 			pause = False
 			gui.paused(False)
 
+def bullet_collision():
+	global Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen
+	temp = gui.get_player_coordinates()
+	x = temp[0]
+	y = temp[1]
+	if shield_life < shield_max_life and shield_broke <= 0:
+		shield_life += shield_regen
+	if shield_broke >0:
+		shield_broke -= 1
+	for b in Enemy_Bullets:
+		if col.get_distance(x,y,b.obj_x,b.obj_y) < 40:
+			if shield_life > 0:
+				shield_life -= b.damage
+				if shield_life <= 0:
+					shield_broke = shield_cooldown
+			else:
+				ship_life -= 1
+				print(ship_life)
+			b.destroy = True
+
 #==========================================================================================#
 #									Input Check											   #
 #==========================================================================================#
@@ -227,6 +250,7 @@ def check_input(dt):
 			move_bullets()
 			move_enemies()
 			Enemy_list = level.get_enemy(time_elapse,1,Enemy_list)
+			bullet_collision()
 
 pyglet.clock.schedule_interval(check_input,1/30)
 
