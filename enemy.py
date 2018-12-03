@@ -34,7 +34,7 @@ class Enemy_1(object):
 class Enemy_2(object):
 	def __init__(self, time):		#
 		super(Enemy_2, self).__init__()
-		self.x = 300
+		self.x = 50
 		self.y = 850
 		self.life = 100
 		self.attack = "normal"
@@ -45,12 +45,24 @@ class Enemy_2(object):
 		self.time = time
 
 
-	def move(self):		#AI of enemy
-		if self.y > 50:
-			self.y -= 30
-		else:
+	def move(self):		#AI of enemy	
+		#follows a square path
+		if self.x == 50 and self.y > 250:
+			self.left = False
+			self.down = True
+			self.y -= 20
+		if self.x < 550 and self.y == 250:
+			self.down = False
+			self.right = True
+			self.x += 20
+		if self.x == 550 and self.y < 750:
+			self.right = False
+			self.up = True
+			self.y += 20
+		elif self.x > 50 and self.y == 750:
+			self.up = False
 			self.left = True
-			self.x += 30
+			self.x -= 20
 		return self	
 
 	def shoot(self, time, player_point):
