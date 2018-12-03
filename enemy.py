@@ -93,12 +93,12 @@ class Enemy_3(object):
 
 	def move(self):		#AI of enemy
 		#always moves down but then chooses randomly to move left or right
-		self.y -= 15	
+		self.y -= 5	
 		move = random.sample(['left','right'],1)
-		if move == 'left':
-			self.x -= 15
-		if move == 'right':
-			self.x += 15		
+		if move == ['left']:
+			self.x -= 5
+		if move == ['right']:
+			self.x += 5		
 		return self	
 
 	def shoot(self, time, player_point):
