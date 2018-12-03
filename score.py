@@ -18,5 +18,5 @@ def add_score(name, score):
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
     		data = file.readlines()
-	data[data.index(name+':'+str(scores[name]))] = name+':'+str(score))
+	data[data.index(name+':'+str(scores[name]))+'/n'] = name+':'+str(score)+'/n'
 	scores[name]=score
