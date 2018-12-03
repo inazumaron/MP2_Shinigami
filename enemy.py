@@ -1,5 +1,6 @@
 import pyglet
 import bullet as bull
+import random
 
 class Enemy_1(object):
 	"""docstring for Enemy_1"""
@@ -34,8 +35,8 @@ class Enemy_1(object):
 class Enemy_2(object):
 	def __init__(self, time):		#
 		super(Enemy_2, self).__init__()
-		self.x = 175
-		self.y = 830
+		self.x = 50
+		self.y = 850
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
@@ -46,11 +47,27 @@ class Enemy_2(object):
 
 
 	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
-		return self	
+		#follows a square path
+		if self.x == 50 and self.y > 250:
+			self.left = False
+			self.down = True
+			self.y -= 20
+		if self.x < 550 and self.y == 250:
+			self.down = False
+			self.right = True
+			self.x += 20
+		if self.x == 550 and self.y < 750:
+			self.right = False
+			self.up = True
+			self.y += 20
+		elif self.x > 50 and self.y == 750:
+			self.up = False
+			self.left = True
+			self.x -= 20
+		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -63,23 +80,24 @@ class Enemy_2(object):
 class Enemy_3(object):
 	def __init__(self, time):		#
 		super(Enemy_3, self).__init__()
-		self.x = 300
-		self.y = 830
+		self.x = 630
+		self.y = 200
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
 		self.id = "easy_3"
-		self.right = True
+		self.left = True
 		self.time = time
 
 
-	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
-		return self	
+	def move(self):		#AI of enemy
+		self.y += 5	
+		self.x -= 5
+		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -92,23 +110,24 @@ class Enemy_3(object):
 class Enemy_4(object):
 	def __init__(self, time):		#
 		super(Enemy_4, self).__init__()
-		self.x = 425
-		self.y = 830
+		self.x = -30
+		self.y = 200
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
 		self.cooldown = 10 #Rate of fire
-		self.id = "easy_4"
+		self.id = "easy_3"
 		self.right = True
 		self.time = time
 
 
-	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
-		return self	
+	def move(self):		#AI of enemy
+		self.y += 5	
+		self.x += 5
+		return self
 
 	def shoot(self, time, player_point):
-		if time%20 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
