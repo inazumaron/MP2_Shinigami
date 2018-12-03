@@ -90,8 +90,14 @@ class Enemy_3(object):
 		self.time = time
 
 
-	def move(self):		#AI of enemy	
-		self.y -= 5					###vertical speed as of now
+	def move(self):		#AI of enemy
+		#always moves down but then chooses randomly to move left or right
+		self.y -= 15	
+		move = random.sample(['left','right'])
+		if move == 'left':
+			self.x -= 15
+		if move == 'right':
+			self.x += 15		
 		return self	
 
 	def shoot(self, time, player_point):
