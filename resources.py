@@ -114,3 +114,7 @@ square_red = pyglet.resource.image("red_square.png")
 center_image(square_red)
 square_blue = pyglet.resource.image("blue_square.png")
 center_image(square_blue)
+
+explosion_fx = pyglet.resource.media('explosion_sound_effect.wav', streaming=False)
+sword_fx = pyglet.resource.media('sword_sound_effect.wav', streaming=False)
+bg_music = pyglet.resource.media('bg_music.wav', streaming=False)
