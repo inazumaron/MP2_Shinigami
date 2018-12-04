@@ -192,14 +192,14 @@ def on_draw():
 	elif game_screen == 3: #score screen
 		game_window.clear()
 		game_background_2.draw()
-		scores = score.get_score()
+		temp = ''
 		for i in sorted(scores):
-			label = pyglet.text.Label(i+'/t'+str(scores[i])+'/n',
+                        temp += i+'/t'+str(scores[i])+'/n'
+		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
-                          font_size=36,
-                          x=window.width//2, y=window.height//2,
+                          font_size=24,
                           anchor_x='center', anchor_y='center')
-			label.draw()
+		label.draw()
 	elif game_screen == 4: #game over screen
 		game_window.clear()
 		spr = pyglet.text.Label(g_o_text,
