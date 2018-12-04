@@ -96,7 +96,7 @@ def on_draw():
 			spr_player.rotation = rotate_sprite(temp_x,temp_y)
 			spr_player.scale = 0.75
 			spr_player.draw()
-			resources.bg_music.play()
+			#resources.bg_music.play()
 			if player_melee:
 				spr_sword.draw()
 			#==================================Drawing player shield and life
