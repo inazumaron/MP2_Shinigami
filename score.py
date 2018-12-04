@@ -1,5 +1,4 @@
 import os
-import pyglet
 filepath =  os.path.normpath('resc/scores.txt')
 
 def get_scores():
@@ -17,11 +16,10 @@ def get_scores():
 
 def add_score(name, score):
 	#add to file
-	name = input("Enter your name: ")
 	scores = get_scores()
 	scores[name]=score
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
     		data = file.readlines()
-	data[data.index(str(name)+':'+str(scores[name])+'\n')] = str(name)+':'+str(score)+'\n'
+	data[data.index(name+':'+str(scores[name]))+'\n'] = name+':'+str(score)+'\n'
 	scores[name]=score
