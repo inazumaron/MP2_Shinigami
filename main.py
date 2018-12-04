@@ -24,6 +24,7 @@ ship_shield = True
 ship_gun = True
 ship_melee = True
 ship_dash = True
+ship_speed = 7
 '''
         ship_shield/gun/melee/dash
             if true: can be used, else cant use
@@ -45,7 +46,7 @@ shield_max_life = 50
 #=====================================
 gun_cooldown = 10
 gun_in_cooldown = True #check if can fire
-gun_base_damage = 1
+gun_base_damage = 10
 gun_homing = False
 gun_piercing = False
 gun_multiple = False
@@ -56,10 +57,12 @@ gun_explosive_damage = gun_base_damage/2
 #Initializing variables for melee
 #=====================================
 melee_cooldown = 60
-melee_base_damage = 10
+melee_base_damage = 50
 melee_reach = 1
-melee_range = 180
+melee_range = 270
 melee_deflect = False
+melee_midswing = False
+melee_angle = 0 #rotation of sprite
 '''
         melee_reach - how far out the weapon reach
         melee_range - 180 (whole front of ship), 360 (all around the ship)
@@ -72,6 +75,7 @@ dash_range = 5
 dash_invulnerable = False
 dash_time = 0
 dash_first_use = True
+dash_distance = 100
 #=====================================
 #Initializing variables for misc
 #=====================================
@@ -108,12 +112,12 @@ options = []
 buff_list = ["axe","dash_c","dash_d","explosive","homing","life","piercing","shield_l","shield_r","spear","speed","sword"]
 
 def player_movement():
-	global ship_melee,ship_shield,ship_dash,dash_now,sword_now,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
+	global ship_speed,dash_distance,melee_midswing,ship_melee,ship_shield,ship_dash,dash_now,sword_now,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
 	temp = gui.get_player_coordinates()
 	x = temp[0]
 	y = temp[1]
 	if key_left_press or key_right_press or key_up_press or key_down_press:
-		temp = ship.ship_move(x,y,key_left_press,key_right_press,key_up_press,key_down_press)
+		temp = ship.ship_move(x,y,key_left_press,key_right_press,key_up_press,key_down_press,ship_speed)
 		x = temp[0]
 		y = temp[1]
 		gui.player_move(x,y)
@@ -122,12 +126,12 @@ def player_movement():
 	if key_gun_press:
 		if gun_in_cooldown:
 			gun_in_cooldown = False
-			Player_Bullets.append(ship.ship_gun(x,y,False))
+			Player_Bullets.append(ship.ship_gun(x,y,gun_explosive,gun_homing,gun_piercing,gun_base_damage))
 
 	if key_dash_press:
 		dash_now = time_elapse
 		if ship_dash:
-			temp = ship.ship_dash(x,y,key_left_press,key_right_press,key_up_press,key_down_press, 0)
+			temp = ship.ship_dash(x,y,key_left_press,key_right_press,key_up_press,key_down_press, 0,dash_distance)
 			x = temp[0]
 			y = temp[1]
 			gui.player_move(x,y)
@@ -139,7 +143,7 @@ def player_movement():
 	if key_melee_press:
 		sword_now = time_elapse
 		if ship_melee:
-			#do something
+			melee_midswing = True
 			ship_melee = False
 	if time_elapse-sword_now >= melee_cooldown:
 		ship_melee = True
@@ -205,7 +209,6 @@ def upgrade():
 			ran = r.SystemRandom()
 			x = ran.randint(0,len(buff_list)-1)
 			options.append(buff_list[x])
-			buff_list.remove(options[-1])
 		gui.get_options(options)
 		gui.paused(True)
 	if pause:
@@ -213,8 +216,59 @@ def upgrade():
 		if x != 0:
 			pause = False
 			print(options[x-1])
+			level_up(options[x-1])
 			gui.reset_option()
 
+def level_up(buff):
+	global buff_list, melee_base_damage, dash_cooldown, dash_distance, gun_explosive, gun_homing, ship_life, gun_piercing, shield_max_life, shield_regen, melee_range, melee_cooldown, ship_speed
+	if buff == "axe":
+		melee_base_damage += 50
+	elif buff == "dash_c":
+		dash_cooldown == dash_cooldown//1.5
+	elif buff == "dash_d":
+		dash_distance *= 1.5
+	elif buff == "explosive":
+		gun_explosive = True
+		buff_list.remove("explosive")
+		if "piercing" in buff_list:
+			buff_list.remove("piercing")
+	elif buff == "homing":
+		gun_homing = True
+		buff_list.remove("homing")
+		if "piercing" in buff_list:
+			buff_list.remove("piercing")
+	elif buff == "life":
+		ship_life += 2
+	elif buff == "piercing":
+		gun_piercing = True
+		buff_list.remove("piercing")
+		if "homing" in buff_list:
+			buff_list.remove("homing")
+		if "explosive" in buff_list:
+			buff_list.remove("explosive")
+	elif buff == "shield_l":
+		shield_max_life += 20
+	elif buff == "shield_r":
+		shield_regen *= 1.5
+	elif buff == "spear":
+		melee_range *= 1.5
+	elif buff == "speed":
+		ship_speed *= 1.5
+	elif buff == "sword":
+		melee_cooldown /= 2
+def melee_handler():
+	global melee_midswing, melee_reach, melee_range, melee_base_damage, melee_angle, Enemy_list
+	if melee_midswing:
+		temp = gui.get_player_coordinates()
+		x = temp[0]
+		y = temp[1]
+		if melee_angle < melee_range:
+			melee_angle += melee_range/15
+		else:
+			melee_midswing = False
+			melee_angle = 0
+		gui.update_sword(x, y, melee_angle, melee_reach)
+		bull.melee_action(melee_base_damage, melee_reach, Enemy_list, x, y, melee_angle)
 
 def bullet_collision():
 	global score,time_elapse,Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen
@@ -269,6 +323,7 @@ def check_input(dt):
 			move_enemies()
 			Enemy_list = level.get_enemy(time_elapse,1,Enemy_list)
 			bullet_collision()
+			melee_handler()
 
 pyglet.clock.schedule_interval(check_input,1/30)
 
