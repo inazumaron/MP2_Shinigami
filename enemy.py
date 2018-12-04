@@ -53,19 +53,19 @@ class Enemy_2(object):
 		if self.x == 50 and self.y > 250:
 			self.left = False
 			self.down = True
-			self.y -= 20
+			self.y -= 5
 		if self.x < 550 and self.y == 250:
 			self.down = False
 			self.right = True
-			self.x += 20
+			self.x += 5
 		if self.x == 550 and self.y < 750:
 			self.right = False
 			self.up = True
-			self.y += 20
+			self.y += 5
 		elif self.x > 50 and self.y == 750:
 			self.up = False
 			self.left = True
-			self.x -= 20
+			self.x -= 5
 		return self
 
 	def shoot(self, time, player_point):
@@ -83,7 +83,7 @@ class Enemy_3(object):
 	def __init__(self, time):		#
 		super(Enemy_3, self).__init__()
 		self.x = 630
-		self.y = 200
+		self.y = 500
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
@@ -114,7 +114,7 @@ class Enemy_4(object):
 	def __init__(self, time):		#
 		super(Enemy_4, self).__init__()
 		self.x = -30
-		self.y = 200
+		self.y = 500
 		self.life = 100
 		self.attack = "normal"
 		self.damage = 10
