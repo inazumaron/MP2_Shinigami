@@ -104,6 +104,7 @@ plr_level = 1
 dash_now = 0
 sword_now = 0
 #======================================
+options = []
 buff_list = ["axe","dash_c","dash_d","explosive","homing","life","piercing","shield_l","shield_r","spear","speed","sword"]
 
 def player_movement():
@@ -195,7 +196,7 @@ def move_enemies():
 	gui.update_enemy_list(Enemy_list)
 
 def upgrade():
-	global time_elapse, plr_level, pause,buff_list
+	global time_elapse, plr_level, pause,buff_list, options
 	if time_elapse//100 == plr_level:
 		pause = True
 		plr_level += 1
@@ -207,6 +208,13 @@ def upgrade():
 			buff_list.remove(options[-1])
 		gui.get_options(options)
 		gui.paused(True)
+	if pause:
+		x = gui.check_option()
+		if x != 0:
+			pause = False
+			print(options[x-1])
+			gui.reset_option()
+
 
 def bullet_collision():
 	global Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen

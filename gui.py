@@ -66,8 +66,10 @@ pause = False
 sword_obj = 0
 
 spr_options = []
+option_clicked = 0
+spr_lvl_up = pyglet.sprite.Sprite(resources.lvl_up_image, x=300, y=550, group=group_foreground)
 for i in range(3):
-	spr = pyglet.sprite.Sprite(img=resources.buff_axe_image, x=150+(150*i), y=400, group=group_etc)
+	spr = pyglet.sprite.Sprite(img=resources.buff_axe_image, x=125+(175*i), y=400, group=group_etc)
 	spr.scale = 0.75
 	spr_options.append(spr)
 
@@ -169,6 +171,8 @@ def on_draw():
 			for b in spr_explosion_list:
 				b.draw()
 		else:
+			game_window.clear()
+			spr_lvl_up.draw()
 			for b in spr_options:
 				b.draw()
 @game_window.event
@@ -176,13 +180,20 @@ def on_mouse_press(x,y,button,modifiers):
 	#==================================
 	#Checking if mouse is over buttons
 	#==================================
-	global game_screen
+	global game_screen, option_clicked
 	if game_screen == 0:
 		if abs(x-spr_btn_start.x)<50 and abs(y-spr_btn_start.y)<40:
 			game_screen = 1
 	elif game_screen == 1:
 		if abs(x-spr_btn_ng.x)<50 and abs(y-spr_btn_ng.y)<40:
 			game_screen = 2
+	elif game_screen == 2:
+		if abs(x-spr_options[0].x)<=37 and abs(y-spr_options[0].y)<=37:
+			option_clicked = 1
+		elif abs(x-spr_options[1].x)<=37 and abs(y-spr_options[1].y)<=37:
+			option_clicked = 2
+		elif abs(x-spr_options[2].x)<=37 and abs(y-spr_options[2].y)<=37:
+			option_clicked = 3
 
 @game_window.event
 def on_mouse_motion(x,y,dx,dy):
@@ -388,3 +399,12 @@ def get_options(opt):
 			spr_options[i].image = resources.buff_speed_image
 		if opt[i] == "sword":
 			spr_options[i].image = resources.buff_sword_image
+
+def check_option():
+	global option_clicked
+	return option_clicked
+
+def reset_option():
+	global option_clicked, pause
+	option_clicked = 0
+	pause = False

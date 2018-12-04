@@ -102,6 +102,8 @@ center_image(buff_speed_image)
 buff_sword_image = pyglet.resource.image("buff_sword.png")
 center_image(buff_sword_image)
 
+lvl_up_image = pyglet.resource.image("lvl.png")
+center_image(lvl_up_image)
 
 bg_image = pyglet.resource.image("bg_1.png")
 center_image(bg_image)
