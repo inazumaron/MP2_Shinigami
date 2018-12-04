@@ -172,7 +172,7 @@ def move_bullets():
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets,Explosion_list)
 
 def move_enemies():
-	global Enemy_list, Enemy_Bullets, time_elapse,Player_Bullets, Explosion_list
+	global Enemy_list, Enemy_Bullets, time_elapse,Player_Bullets, Explosion_list, score
 	temp = gui.get_player_coordinates()
 	plr_point = {"x":temp[0],"y":temp[1]}
 	dead_enemy = []
@@ -180,6 +180,7 @@ def move_enemies():
 		enemy = enemy.move()
 		if enemy.life <= 0:
 			dead_enemy.append(enemy)
+			score += enemy.points
 	for enemy in Enemy_list:
 		if enemy.y < -50:
 			dead_enemy.append(enemy)				
@@ -195,8 +196,8 @@ def move_enemies():
 	gui.update_enemy_list(Enemy_list)
 
 def upgrade():
-	global time_elapse, plr_level, pause,buff_list, options
-	if time_elapse//100 == plr_level:
+	global time_elapse, plr_level, pause,buff_list, options, score
+	if score > (plr_level**2)*(50)+100:
 		pause = True
 		plr_level += 1
 		options = []

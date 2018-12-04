@@ -15,6 +15,7 @@ class Enemy_1(object):
 		self.id = "easy_1"
 		self.right = True
 		self.time = time
+		self.points = 5
 
 
 	def move(self):		#AI of enemy	
@@ -44,6 +45,7 @@ class Enemy_2(object):
 		self.id = "easy_2"
 		self.right = True
 		self.time = time
+		self.points = 8
 
 
 	def move(self):		#AI of enemy	
@@ -89,6 +91,7 @@ class Enemy_3(object):
 		self.id = "easy_3"
 		self.left = True
 		self.time = time
+		self.points = 12
 
 
 	def move(self):		#AI of enemy
@@ -119,6 +122,7 @@ class Enemy_4(object):
 		self.id = "easy_3"
 		self.right = True
 		self.time = time
+		self.points = 20
 
 
 	def move(self):		#AI of enemy
@@ -149,6 +153,7 @@ class Enemy_5(object):
 		self.id = "med_1"
 		self.right = True
 		self.time = time
+		self.points = 30
 
 
 	def move(self):		#AI of enemy	
@@ -178,6 +183,7 @@ class Enemy_6(object):
 		self.cooldown = 10 #Rate of fire
 		self.id = "med_2"
 		self.right = True
+		self.points = 40
 
 	def move(self):		#AI of enemy
 		if self.right == True: 	#Move right till out of screen (600x800)	###check first if moving right 
@@ -218,6 +224,7 @@ class Enemy_7(object):
 		self.cooldown = 10 #Rate of fire
 		self.id = "med_3"
 		self.right = False
+		self.points = 50
 
 	def move(self):		#AI of enemy
 		if self.right == False: 	#Move right till out of screen (600x800)	###check first if moving right 
@@ -259,6 +266,7 @@ class Enemy_8(object):
 		self.id = "hard_1"
 		self.right = False
 		self.down = True
+		self.points = 65
 
 	def move(self):		#AI of enemy
 		if self.y > 400 and self.down:
@@ -311,6 +319,7 @@ class Enemy_9(object):
 		self.id = "hard_2"
 		self.right = True
 		self.down = True
+		self.points = 80
 
 	def move(self):		#AI of enemy
 		if self.y > 50 and self.down:
@@ -363,6 +372,7 @@ class Enemy_10(object):
 		self.id = "hard_3"
 		self.right = False
 		self.down = True
+		self.points = 100
 
 	def move(self):		#AI of enemy
 		if self.y > 50 and self.down:
