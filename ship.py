@@ -30,11 +30,6 @@ def ship_gun(x,y,ex,ho,pi,dam):
 	bullet.damage = dam
 	return bullet
 
-def ship_melee(x,y,modifiers):
-	#modifiers=stats
-	#create melee class if cooldown = 0
-	return attack
-
 def ship_dash(x,y,left,right,up,down,modifiers,dis):
 	#modifiers=stats
 	#dahses to a certain direction

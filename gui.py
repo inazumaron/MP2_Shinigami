@@ -35,6 +35,16 @@ group_midground = pyglet.graphics.OrderedGroup(1)
 group_foreground = pyglet.graphics.OrderedGroup(2)
 group_etc = pyglet.graphics.OrderedGroup(3)
 
+#Handle player rotation
+temp_x = 0
+temp_y = 0
+
+pause = False
+
+sword_obj = 0
+g_o_text = ""
+option_clicked = 0
+
 #Start/Continue button
 spr_btn_start = pyglet.sprite.Sprite(img=resources.button_start, x=300, y=200,group=group_foreground)
 spr_btn_continue = pyglet.sprite.Sprite(img=resources.button_continue, x=120, y=640,group=group_foreground)
@@ -56,20 +66,7 @@ spr_player_bullets = []
 spr_enemy_list = []
 spr_enemy_bullets = []
 	
-#Set cursor
-cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
-#game_window.set_mouse_cursor(cursor)
-
-#Handle player rotation
-temp_x = 0
-temp_y = 0
-
-pause = False
-
-sword_obj = 0
-g_o_text = ""
 spr_options = []
-option_clicked = 0
 spr_lvl_up = pyglet.sprite.Sprite(resources.lvl_up_image, x=300, y=550, group=group_foreground)
 for i in range(3):
 	spr = pyglet.sprite.Sprite(img=resources.buff_axe_image, x=125+(175*i), y=400, group=group_etc)
@@ -86,7 +83,7 @@ def on_draw():
 	elif game_screen == 1:
 		game_window.clear()
 		game_menu.draw()
-		spr_btn_continue.draw()
+		#spr_btn_continue.draw()
 		spr_btn_ng.draw()
 		spr_btn_score.draw()
 		spr_btn_help.draw()
