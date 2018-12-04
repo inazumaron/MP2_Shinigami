@@ -1,6 +1,7 @@
 import pyglet
 import resources
 import math
+import score
 from pyglet.window import *
 
 #Variables
@@ -189,6 +190,16 @@ def on_draw():
 			for b in spr_options:
 				b.draw()
 	elif game_screen == 3: #score screen
+		game_window.clear()
+		game_background_2.draw()
+		scores = score.get_score()
+		for i in sorted(scores):
+			label = pyglet.text.Label(i+'/t'+str(scores[i])+'/n',
+                          font_name='Times New Roman',
+                          font_size=36,
+                          x=window.width//2, y=window.height//2,
+                          anchor_x='center', anchor_y='center')
+			label.draw()
 		pass
 	elif game_screen == 4: #game over screen
 		game_window.clear()
@@ -218,6 +229,8 @@ def on_mouse_press(x,y,button,modifiers):
 			option_clicked = 2
 		elif abs(x-spr_options[2].x)<=37 and abs(y-spr_options[2].y)<=37:
 			option_clicked = 3
+	elif game_screen == 3:
+		game_screen = 2
 
 @game_window.event
 def on_mouse_motion(x,y,dx,dy):
