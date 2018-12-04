@@ -96,7 +96,7 @@ def on_draw():
 			spr_player.rotation = rotate_sprite(temp_x,temp_y)
 			spr_player.scale = 0.75
 			spr_player.draw()
-			resources.bg_music.play()
+			#resources.bg_music.play()
 			if player_melee:
 				spr_sword.draw()
 			#==================================Drawing player shield and life
@@ -202,6 +202,7 @@ def on_draw():
 		label.draw()
 	elif game_screen == 4: #game over screen
 		game_window.clear()
+		name = self.widgets[0].document.print(name)
 		spr = pyglet.text.Label(g_o_text,
                           font_name='Times New Roman',
                           font_size=36,

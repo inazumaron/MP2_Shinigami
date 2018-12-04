@@ -16,6 +16,7 @@ def get_scores():
 
 def add_score(name, score):
 	#add to file
+	scores = get_scores()
 	scores[name]=score
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
