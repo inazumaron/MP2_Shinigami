@@ -2,6 +2,7 @@ import pyglet
 import resources
 import math
 from pyglet.window import *
+import score
 
 #Variables
 #===========================================
@@ -44,6 +45,7 @@ pause = False
 sword_obj = 0
 g_o_text = ""
 option_clicked = 0
+help_text = "How to play: \n WASD: Move player \n R:shoot \n T:slash \n Y:Dash \n \n Try to survive as long as you can \n and defeat as much enemies in the process \n \n you lose if your life reaches 0, which \n is represented by the \n red squares at the \n bottom of the screen. \n this will be reduced if you \n are hit by a bullet and your \n shield is down, which is \n represented by the blue squares"
 
 #Start/Continue button
 spr_btn_start = pyglet.sprite.Sprite(img=resources.button_start, x=300, y=200,group=group_foreground)
@@ -188,11 +190,13 @@ def on_draw():
 		game_window.clear()
 		game_background_2.draw()
 		temp = ''
+		scores = score.get_scores()
 		for i in sorted(scores):
                         temp += i+'/t'+str(scores[i])+'/n'
 		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
                           font_size=24,
+                          x=200,y=400,
                           anchor_x='center', anchor_y='center')
 		label.draw()
 	elif game_screen == 4: #game over screen
@@ -200,6 +204,14 @@ def on_draw():
 		spr = pyglet.text.Label(g_o_text,
                           font_name='Times New Roman',
                           font_size=36,
+                          x=300, y=400,width=500,
+                          anchor_x='center', anchor_y='center',multiline=True)
+		spr.draw()
+	elif game_screen == 5: #help screen
+		game_window.clear()
+		spr = pyglet.text.Label(help_text,
+                          font_name='Times New Roman',
+                          font_size=22,
                           x=300, y=400,width=500,
                           anchor_x='center', anchor_y='center',multiline=True)
 		spr.draw()
@@ -216,6 +228,10 @@ def on_mouse_press(x,y,button,modifiers):
 	elif game_screen == 1:
 		if abs(x-spr_btn_ng.x)<50 and abs(y-spr_btn_ng.y)<40:
 			game_screen = 2
+		if abs(x-spr_btn_score.x)<50 and abs(y-spr_btn_score.y)<40:
+			game_screen = 3
+		if abs(x-spr_btn_help.x)<50 and abs(y-spr_btn_help.y)<40:
+			game_screen = 5
 	elif game_screen == 2:
 		if abs(x-spr_options[0].x)<=37 and abs(y-spr_options[0].y)<=37:
 			option_clicked = 1
@@ -223,6 +239,8 @@ def on_mouse_press(x,y,button,modifiers):
 			option_clicked = 2
 		elif abs(x-spr_options[2].x)<=37 and abs(y-spr_options[2].y)<=37:
 			option_clicked = 3
+	else:
+		game_screen = 1
 
 @game_window.event
 def on_mouse_motion(x,y,dx,dy):

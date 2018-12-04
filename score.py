@@ -8,9 +8,9 @@ def get_scores():
 	with open(filepath) as fp:
         	line = fp.readline().strip()
         	while line:
-			temp = line.split(':')
-			scores[temp[0]] = int(temp[1])
-			line = fp.readline().strip()
+        		temp = line.split(':')
+        		scores[temp[0]] = int(temp[1])
+        		line = fp.readline().strip()
 	#scores = {"name":0} #format must be like this (0 is the score)
 	return scores
 
