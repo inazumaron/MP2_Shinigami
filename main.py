@@ -4,6 +4,7 @@ import ship as ship
 import bullet as bull
 import level as level
 import collision as col
+import random as r
 
 #=====================================
 #Initializing variables for player input
@@ -102,6 +103,8 @@ pause = False
 plr_level = 1
 dash_now = 0
 sword_now = 0
+#======================================
+buff_list = ["axe","dash_c","dash_d","explosive","homing","life","piercing","shield_l","shield_r","spear","speed","sword"]
 
 def player_movement():
 	global ship_melee,ship_shield,ship_dash,dash_now,sword_now,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
@@ -192,11 +195,17 @@ def move_enemies():
 	gui.update_enemy_list(Enemy_list)
 
 def upgrade():
-	global time_elapse, plr_level, pause
-	if time_elapse//10000 == plr_level:
+	global time_elapse, plr_level, pause,buff_list
+	if time_elapse//100 == plr_level:
 		pause = True
 		gui.paused(True)
 		plr_level += 1
+		options = []
+		for i in range(3):
+			x = r.randint(len(buff_list))
+			option.append(buff_list[x])
+			buff_list.remove(options[-1])
+		print(options)
 		if input() == "true":
 			pause = False
 			gui.paused(False)
