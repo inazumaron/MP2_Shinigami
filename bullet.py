@@ -1,5 +1,6 @@
 import pyglet
 import collision as col
+import math
 
 def bullet_action(bullet,target_list,time_elapse):
 	bullet.obj_x += bullet.obj_vx
@@ -29,7 +30,7 @@ def bullet_action(bullet,target_list,time_elapse):
 		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
 			if bullet.modifiers["piercing"] == False:
 				bullet.destroy = True
-			target.life -= 100	#insta kill as of now
+			target.life -= 100
 
 	return bullet
 
@@ -43,8 +44,19 @@ def bullet_action_no_collision(bullet):
 		bullet.destroy = True
 	return bullet
 
-def melee_action():
-	pass
+def melee_action(damage, range, target, x, y, angle):
+	x_2 = math.cos(angle)*range*50 + x
+	y_2 = math.sin(angle)*range*50 + y
+	print(x_2,y_2)
+	remove = []
+	for b in target:
+		if col.get_distance(x_2,y_2,b.x,b.y) <= 40:
+			b.life -= damage
+			print(b.life)
+		if b.life <= 0:
+			remove.append(b)
+	for b in remove:
+		target.remove(b)
 
 def explosion_action(exp, target_list):
 	for target in target_list:

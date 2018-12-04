@@ -113,7 +113,6 @@ def on_draw():
 			#===================================Drawing Player bullets=======================
 			spr_player_bullets = []
 			for b in Player_Bullets:
-				b.modifiers["explosive"] = True
 				if b.modifiers["homing"] and b.modifiers["explosive"]:
 					spr_player_bullets.append(pyglet.sprite.Sprite(img=resources.bullet_exhoming,x=b.obj_x,y=b.obj_y,group=group_midground))
 				elif b.modifiers["homing"]:
@@ -303,7 +302,7 @@ def player_move(x,y):
 	global spr_player, spr_sword
 	spr_player.x = x
 	spr_player.y = y
-	spr_sword.x = x+30
+	spr_sword.x = x+20
 	spr_sword.y = y
 
 def update_bullet_list(p_bullet,e_bullet,explosion):
@@ -436,3 +435,10 @@ def game_over(score,time):
 	global g_o_text, game_screen
 	g_o_text += "Congratulations, you survived "+str(time)+" long"+"\n"+"With a score of "+str(score)
 	game_screen = 4
+
+def update_sword(x, y, angle, reach):
+	global spr_sword
+	spr_sword.x = x+20
+	spr_sword.y = y
+	spr_sword.rotation = -angle
+	spr_sword.scale = reach
