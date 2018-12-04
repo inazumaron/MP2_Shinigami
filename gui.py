@@ -188,6 +188,10 @@ def on_draw():
 			spr_lvl_up.draw()
 			for b in spr_options:
 				b.draw()
+	elif game_screen == 3: #score screen
+		pass
+	elif game_screen == 4: #game over screen
+		pass
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
