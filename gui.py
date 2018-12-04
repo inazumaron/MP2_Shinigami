@@ -185,7 +185,16 @@ def on_draw():
 			for b in spr_options:
 				b.draw()
 	elif game_screen == 3: #score screen
-		pass
+		game_window.clear()
+		game_background_2.draw()
+		temp = ''
+		for i in sorted(scores):
+                        temp += i+'/t'+str(scores[i])+'/n'
+		label = pyglet.text.Label(temp.strip(),
+                          font_name='Times New Roman',
+                          font_size=24,
+                          anchor_x='center', anchor_y='center')
+		label.draw()
 	elif game_screen == 4: #game over screen
 		game_window.clear()
 		spr = pyglet.text.Label(g_o_text,
