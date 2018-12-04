@@ -27,6 +27,7 @@ game_window = pyglet.window.Window(600,800)
 group_background = pyglet.graphics.OrderedGroup(0)
 group_midground = pyglet.graphics.OrderedGroup(1)
 group_foreground = pyglet.graphics.OrderedGroup(2)
+group_etc = pyglet.graphics.OrderedGroup(3)
 
 #Start/Continue button
 spr_btn_start = pyglet.sprite.Sprite(img=resources.button_start, x=300, y=200,group=group_foreground)
@@ -64,9 +65,15 @@ pause = False
 
 sword_obj = 0
 
+spr_options = []
+for i in range(3):
+	spr = pyglet.sprite.Sprite(img=resources.buff_axe_image, x=150+(150*i), y=400, group=group_etc)
+	spr.scale = 0.75
+	spr_options.append(spr)
+
 @game_window.event
 def on_draw():
-	global Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
+	global spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
 		game_background.draw()
@@ -161,7 +168,9 @@ def on_draw():
 				Explosion_list.remove(b)
 			for b in spr_explosion_list:
 				b.draw()
-
+		else:
+			for b in spr_options:
+				b.draw()
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -351,3 +360,31 @@ def update_ship_stat(shield, dash, sword):
 		spr_player.image = resources.player_image_dash
 	else:
 		spr_player.image = resources.player_image
+
+def get_options(opt):
+	global spr_options
+	for i in range(3):
+		if opt[i] == "axe":
+			spr_options[i].image = resources.buff_axe_image
+		if opt[i] == "dash_c":
+			spr_options[i].image = resources.buff_dash_c_image
+		if opt[i] == "dash_d":
+			spr_options[i].image = resources.buff_dash_d_image
+		if opt[i] == "explosive":
+			spr_options[i].image = resources.buff_explosive_image
+		if opt[i] == "homing":
+			spr_options[i].image = resources.buff_homing_image
+		if opt[i] == "life":
+			spr_options[i].image = resources.buff_life_image
+		if opt[i] == "piercing":
+			spr_options[i].image = resources.buff_piercing_image
+		if opt[i] == "shield_l":
+			spr_options[i].image = resources.buff_shield_l_image
+		if opt[i] == "shield_r":
+			spr_options[i].image = resources.buff_shield_r_image
+		if opt[i] == "spear":
+			spr_options[i].image = resources.buff_spear_image
+		if opt[i] == "speed":
+			spr_options[i].image = resources.buff_speed_image
+		if opt[i] == "sword":
+			spr_options[i].image = resources.buff_sword_image

@@ -198,17 +198,15 @@ def upgrade():
 	global time_elapse, plr_level, pause,buff_list
 	if time_elapse//100 == plr_level:
 		pause = True
-		gui.paused(True)
 		plr_level += 1
 		options = []
 		for i in range(3):
-			x = r.randint(len(buff_list))
-			option.append(buff_list[x])
+			ran = r.SystemRandom()
+			x = ran.randint(0,len(buff_list)-1)
+			options.append(buff_list[x])
 			buff_list.remove(options[-1])
-		print(options)
-		if input() == "true":
-			pause = False
-			gui.paused(False)
+		gui.get_options(options)
+		gui.paused(True)
 
 def bullet_collision():
 	global Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen
