@@ -229,7 +229,9 @@ def on_mouse_press(x,y,button,modifiers):
 		elif abs(x-spr_options[2].x)<=37 and abs(y-spr_options[2].y)<=37:
 			option_clicked = 3
 	elif game_screen == 3:
-		game_screen = 2
+		game_screen = 1
+	elif game_screen == 4:
+		game_screen = 1
 
 @game_window.event
 def on_mouse_motion(x,y,dx,dy):
