@@ -30,7 +30,7 @@ def bullet_action(bullet,target_list,time_elapse):
 		if col.get_distance(bullet.obj_x,bullet.obj_y,target.x,target.y) <= 40:
 			if bullet.modifiers["piercing"] == False:
 				bullet.destroy = True
-			target.life -= 100
+			target.life -= bullet.damage
 
 	return bullet
 
