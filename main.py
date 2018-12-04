@@ -217,7 +217,7 @@ def upgrade():
 
 
 def bullet_collision():
-	global Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen
+	global score,time_elapse,Enemy_Bullets, shield_life, ship_life, shield_cooldown, shield_broke, shield_regen
 	temp = gui.get_player_coordinates()
 	x = temp[0]
 	y = temp[1]
@@ -236,6 +236,8 @@ def bullet_collision():
 				print(ship_life)
 			b.destroy = True
 	gui.update_life(shield_life, ship_life)
+	if ship_life <= 0:
+		gui.game_over(score,time_elapse)
 
 #==========================================================================================#
 #									Input Check											   #

@@ -67,7 +67,7 @@ temp_y = 0
 pause = False
 
 sword_obj = 0
-
+g_o_text = ""
 spr_options = []
 option_clicked = 0
 spr_lvl_up = pyglet.sprite.Sprite(resources.lvl_up_image, x=300, y=550, group=group_foreground)
@@ -78,7 +78,7 @@ for i in range(3):
 
 @game_window.event
 def on_draw():
-	global spr_shield_life,spr_life,shield_life,life,spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
+	global g_o_text, spr_shield_life,spr_life,shield_life,life,spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
 		game_background.draw()
@@ -191,7 +191,14 @@ def on_draw():
 	elif game_screen == 3: #score screen
 		pass
 	elif game_screen == 4: #game over screen
-		pass
+		game_window.clear()
+		spr = pyglet.text.Label(g_o_text,
+                          font_name='Times New Roman',
+                          font_size=36,
+                          x=300, y=400,width=500,
+                          anchor_x='center', anchor_y='center',multiline=True)
+		spr.draw()
+
 @game_window.event
 def on_mouse_press(x,y,button,modifiers):
 	#==================================
@@ -424,3 +431,8 @@ def reset_option():
 	global option_clicked, pause
 	option_clicked = 0
 	pause = False
+
+def game_over(score,time):
+	global g_o_text, game_screen
+	g_o_text += "Congratulations, you survived "+str(time)+" long"+"\n"+"With a score of "+str(score)
+	game_screen = 4
