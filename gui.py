@@ -202,7 +202,7 @@ def on_draw():
 		label.draw()
 	elif game_screen == 4: #game over screen
 		game_window.clear()
-		name = self.widgets[0].document.print(name)
+		#name = self.widgets[0].document.print(name)
 		spr = pyglet.text.Label(g_o_text,
                           font_name='Times New Roman',
                           font_size=36,
