@@ -200,7 +200,6 @@ def on_draw():
                           x=window.width//2, y=window.height//2,
                           anchor_x='center', anchor_y='center')
 			label.draw()
-		pass
 	elif game_screen == 4: #game over screen
 		game_window.clear()
 		spr = pyglet.text.Label(g_o_text,
