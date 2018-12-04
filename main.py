@@ -190,7 +190,6 @@ def move_enemies():
 		temp_bullet = enemy.shoot(time_elapse, plr_point)
 		if temp_bullet != None:
 			Enemy_Bullets.append(temp_bullet)
-			gui.change_dot(False)
 
 	gui.update_bullet_list(Player_Bullets,Enemy_Bullets, Explosion_list)
 	gui.update_enemy_list(Enemy_list)
@@ -235,6 +234,7 @@ def bullet_collision():
 				ship_life -= 1
 				print(ship_life)
 			b.destroy = True
+	gui.update_life(shield_life, ship_life)
 
 #==========================================================================================#
 #									Input Check											   #

@@ -20,6 +20,12 @@ player_melee = True
 Enemy_list = []
 Explosion_list = []
 
+shield_life = 100
+life = 3
+
+spr_shield_life = []
+spr_life = []
+
 #Set up window
 game_window = pyglet.window.Window(600,800)
 
@@ -54,10 +60,7 @@ spr_enemy_bullets = []
 cursor = pyglet.window.ImageMouseCursor(resources.cursor_1, 16, 8)
 #game_window.set_mouse_cursor(cursor)
 
-#dot sprite
-dot = pyglet.sprite.Sprite(img=resources.dot_blue, x=40, y=40, group=group_foreground)
-
-#Delete this someday
+#Handle player rotation
 temp_x = 0
 temp_y = 0
 
@@ -75,7 +78,7 @@ for i in range(3):
 
 @game_window.event
 def on_draw():
-	global spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
+	global spr_shield_life,spr_life,shield_life,life,spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
 		game_background.draw()
@@ -96,7 +99,17 @@ def on_draw():
 			spr_player.draw()
 			if player_melee:
 				spr_sword.draw()
-
+			#==================================Drawing player shield and life
+			spr_shield_life = []
+			spr_life = []
+			for b in range(int(shield_life//5)):
+				spr_shield_life.append(pyglet.sprite.Sprite(img=resources.square_blue, x=20+(b*22), y=50, group=group_foreground))
+			for b in range(life):
+				spr_life.append(pyglet.sprite.Sprite(img=resources.square_red, x=20+(b*22), y=30, group=group_foreground))
+			for b in spr_shield_life:
+				b.draw()
+			for b in spr_life:
+				b.draw()
 			#===================================Drawing Player bullets=======================
 			spr_player_bullets = []
 			for b in Player_Bullets:
@@ -313,11 +326,10 @@ def get_player_coordinates():
 	global spr_player
 	return [spr_player.x, spr_player.y]
 
-def change_dot(status):
-	if status:
-		dot.image = resources.dot_blue
-	else:
-		dot.image = resources.dot_red
+def update_life(shield,lifex):
+	global shield_life, life
+	shield_life = shield
+	life = lifex
 
 def game_start():
 	global game_screen
