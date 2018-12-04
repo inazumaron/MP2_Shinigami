@@ -1,5 +1,5 @@
 import os
-filepath =  os.path.abspath('scores.txt')
+filepath =  os.path.normpath('resc/scores.txt')
 
 def get_scores():
 	#get scores from file
