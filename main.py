@@ -5,7 +5,7 @@ import bullet as bull
 import level as level
 import collision as col
 import random as r
-import score
+import score as sc
 
 #=====================================
 #Initializing variables for player input
@@ -109,8 +109,11 @@ plr_level = 1
 dash_now = 0
 sword_now = 0
 #======================================
+bullet_d_mod = 1
+bullet_s_mod = 1
+enemy_l_mod = 1
 options = []
-buff_list = ["axe","dash_c","dash_d","explosive","homing","life","piercing","shield_l","shield_r","spear","speed","sword"]
+buff_list = ["axe","bullet_d","bullet_s","dash_c","dash_d","enemy_l","explosive","homing","life","piercing","shield_c","shield_l","shield_r","spear","speed","sword"]
 
 def player_movement():
 	global ship_speed,dash_distance,melee_midswing,ship_melee,ship_shield,ship_dash,dash_now,sword_now,key_left_press,key_right_press,key_up_press,key_down_press,key_gun_press,key_melee_press,key_dash_press,gun_in_cooldown,gun_cooldown,Player_Bullets,dash_time,dash_first_use
@@ -151,10 +154,11 @@ def player_movement():
 	gui.update_ship_stat(ship_shield,ship_dash,ship_melee)
 
 def move_bullets():
-	global Player_Bullets, Enemy_Bullets, Explosion_list
+	global Player_Bullets, Enemy_Bullets, Explosion_list, bullet_d_mod, bullet_s_mod
 	destroy_bullet = []
 	for bullet in range(0,len(Player_Bullets)):
 		Player_Bullets[bullet] = bull.bullet_action(Player_Bullets[bullet],Enemy_list,0)
+		Player_Bullets[bullet].dam_mod = bullet_d_mod
 		if Player_Bullets[bullet].destroy:
 			destroy_bullet.append(Player_Bullets[bullet])
 	for bullet in destroy_bullet:
@@ -167,6 +171,7 @@ def move_bullets():
 	destroy_bullet = []
 	for bullet in range(0,len(Enemy_Bullets)):
 		Enemy_Bullets[bullet] = bull.bullet_action_no_collision(Enemy_Bullets[bullet])
+		Enemy_Bullets[bullet].sp_mod = bullet_s_mod
 		if Enemy_Bullets[bullet].destroy:
 			destroy_bullet.append(Enemy_Bullets[bullet])
 	for bullet in destroy_bullet:
@@ -221,13 +226,19 @@ def upgrade():
 			gui.reset_option()
 
 def level_up(buff):
-	global buff_list, melee_base_damage, dash_cooldown, dash_distance, gun_explosive, gun_homing, ship_life, gun_piercing, shield_max_life, shield_regen, melee_range, melee_cooldown, ship_speed
+	global bullet_d_mod,bullet_s_mod,enemy_l_mod,buff_list, melee_base_damage, dash_cooldown, dash_distance, gun_explosive, gun_homing, ship_life, gun_piercing, shield_max_life,shield_cooldown, shield_regen, melee_range, melee_cooldown, ship_speed
 	if buff == "axe":
 		melee_base_damage += 50
+	elif buff == "bullet_d":
+		bullet_d_mod *= 2
+	elif buff == "bullet_s":
+		bullet_s_mod /= 1.5
 	elif buff == "dash_c":
 		dash_cooldown == dash_cooldown//1.5
 	elif buff == "dash_d":
 		dash_distance *= 1.5
+	elif buff == "enemy_l":
+		enemy_l_mod *= 0.8
 	elif buff == "explosive":
 		gun_explosive = True
 		buff_list.remove("explosive")
@@ -247,12 +258,14 @@ def level_up(buff):
 			buff_list.remove("homing")
 		if "explosive" in buff_list:
 			buff_list.remove("explosive")
+	elif buff == "shield_c":
+		shield_cooldown /= 2
 	elif buff == "shield_l":
 		shield_max_life += 20
 	elif buff == "shield_r":
 		shield_regen *= 1.5
 	elif buff == "spear":
-		melee_range *= 1.5
+		melee_range *= 2
 	elif buff == "speed":
 		ship_speed *= 1.5
 	elif buff == "sword":
@@ -293,7 +306,11 @@ def bullet_collision():
 	gui.update_life(shield_life, ship_life)
 	if ship_life <= 0:
 		gui.game_over(score,time_elapse)
-		score.add_score(time_elapse,score)
+<<<<<<< HEAD
+		sc.add_score(time_elapse,score)
+=======
+		sc.add_score(score)
+>>>>>>> 0ea248cd2325bd22d4840455da76482aa8b79f64
 
 #==========================================================================================#
 #									Input Check											   #

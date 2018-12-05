@@ -27,6 +27,14 @@ life = 3
 spr_shield_life = []
 spr_life = []
 
+story_text = ["In the year 2050, the lands have been littered with strife and war. Nuclear weapons turned against one another. Order and civilizations turned to chaos and ruins.",
+				"In this place, trees were now a rare sight, for most places have now been laid bare, with not much life dwelling at the surface. Radiation took the lands forcing all to retreat under",
+				"Those who do roam these barren expanse are pirates, bandits, and robots, what remained of the war that took place. When they near settlements, the people quake in fear and submit to them",
+				"But, there exist a being that roams the surface. He is no outlaw nor machine. People say that he is the god of death in the form of man, sent here to cleanse this world of evil",
+				"It is said that when he kills, he gains more power. But it is also said that he can be killed, but not for long. For as he is death adn not man, he will come back to fulfill his duty",
+				"But the surface is a vast field, filled with bandits and machines, will he be able to rid this world of evil?"]
+stroy_index = 0
+
 #Set up window
 game_window = pyglet.window.Window(600,800)
 
@@ -57,6 +65,7 @@ spr_btn_help = pyglet.sprite.Sprite(img=resources.button_help, x=120, y=370,grou
 #set up background
 game_background = pyglet.sprite.Sprite(img=resources.cover_image,x=300,y=400,group=group_background)
 game_background_2 = pyglet.sprite.Sprite(img=resources.bg_image,x=300,y=400,group=group_background)
+story_background = pyglet.sprite.Sprite(img=resources.bg_2_image,x=300,y=400,group=group_background)
 
 #menu background
 game_menu = pyglet.sprite.Sprite(img=resources.menu_image,x=300,y=400,group=group_background)
@@ -80,8 +89,20 @@ def on_draw():
 	global g_o_text, spr_shield_life,spr_life,shield_life,life,spr_options,Explosion_list,player_melee,game_screen, spr_player_bullets, Player_Bullets, Enemy_list, Enemy_Bullets, spr_enemy_bullets, spr_btn_continue, spr_btn_ng, spr_btn_score, spr_btn_help
 	if game_screen == 0:
 		game_window.clear()
-		game_background.draw()
-		spr_btn_start.draw()
+		if stroy_index == 0:
+			game_background.draw()
+			spr_btn_start.draw()
+		elif stroy_index<=len(story_text):
+			story_background.draw()
+			spr = pyglet.text.Label(story_text[stroy_index-1],
+                          font_name='Times New Roman',
+                          font_size=20,
+                          x=300, y=400,width=500,
+                          anchor_x='center', anchor_y='center',multiline=True)
+			spr.draw()
+			pass
+		else:
+			game_screen = 1
 	elif game_screen == 1:
 		game_window.clear()
 		game_menu.draw()
@@ -96,7 +117,7 @@ def on_draw():
 			spr_player.rotation = rotate_sprite(temp_x,temp_y)
 			spr_player.scale = 0.75
 			spr_player.draw()
-			resources.bg_music.play()
+			#resources.bg_music.play()
 			if player_melee:
 				spr_sword.draw()
 			#==================================Drawing player shield and life
@@ -145,7 +166,7 @@ def on_draw():
 
 			spr_enemy_list = []
 			for b in Enemy_list:
-				if b.id == "easy_1":
+				if b.id == "easy_1" or b.id == 'easy_0':#image of enemy row for now
 					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
 				if b.id == "easy_2":
 					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_2_image,x=b.x,y=b.y,group=group_foreground))
@@ -190,10 +211,10 @@ def on_draw():
 	elif game_screen == 3: #score screen
 		game_window.clear()
 		game_background_2.draw()
-		temp = ''
+		temp = 'HIGHSCORES:\n'
 		scores = score.get_scores()
-		for i in sorted(scores):
-                        temp += str(i)+'\t'+str(scores[i])+'\n'
+		for i in range(0,len(scores)):
+			temp += str(i+1)+'.\t\t'+str(scores[i])+'\n'
 		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
                           font_size=24,
@@ -202,6 +223,7 @@ def on_draw():
 		label.draw()
 	elif game_screen == 4: #game over screen
 		game_window.clear()
+		#name = self.widgets[0].document.print(name)
 		spr = pyglet.text.Label(g_o_text,
                           font_name='Times New Roman',
                           font_size=36,
@@ -222,10 +244,13 @@ def on_mouse_press(x,y,button,modifiers):
 	#==================================
 	#Checking if mouse is over buttons
 	#==================================
-	global game_screen, option_clicked
+	global game_screen, option_clicked, stroy_index
 	if game_screen == 0:
-		if abs(x-spr_btn_start.x)<50 and abs(y-spr_btn_start.y)<40:
-			game_screen = 1
+		if stroy_index == 0:
+			if abs(x-spr_btn_start.x)<50 and abs(y-spr_btn_start.y)<40:
+				stroy_index += 1
+		else:
+			stroy_index += 1
 	elif game_screen == 1:
 		if abs(x-spr_btn_ng.x)<50 and abs(y-spr_btn_ng.y)<40:
 			game_screen = 2
@@ -458,7 +483,10 @@ def reset_option():
 
 def game_over(score,time):
 	global g_o_text, game_screen
-	g_o_text += "Congratulations, you survived "+str(time)+" long"+"\n"+"With a score of "+str(score)
+	total_time_in_seconds = time//30
+	minutes = str(total_time_in_seconds//60)
+	seconds = str(total_time_in_seconds%60)
+	g_o_text += "Congratulations, you survived "+ minutes + ':' + '{:0>2}'.format(seconds) +" long"+"\n"+"With a score of "+str(score)
 	game_screen = 4
 
 def update_sword(x, y, angle, reach):
