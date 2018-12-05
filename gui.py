@@ -96,7 +96,7 @@ def on_draw():
 			spr_player.rotation = rotate_sprite(temp_x,temp_y)
 			spr_player.scale = 0.75
 			spr_player.draw()
-			resources.bg_music.play()
+			#resources.bg_music.play()
 			if player_melee:
 				spr_sword.draw()
 			#==================================Drawing player shield and life
@@ -190,10 +190,10 @@ def on_draw():
 	elif game_screen == 3: #score screen
 		game_window.clear()
 		game_background_2.draw()
-		temp = ''
+		temp = 'HIGHSCORES:\n'
 		scores = score.get_scores()
-		for i in sorted(scores):
-                        temp += str(i)+'\t'+str(scores[i])+'\n'
+		for i in range(0,len(scores)):
+			temp += str(i+1)+'.\t\t'+str(scores[i])+'\n'
 		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
                           font_size=24,

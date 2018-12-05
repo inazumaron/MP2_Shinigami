@@ -3,26 +3,34 @@ filepath =  os.path.normpath('resc/scores.txt')
 
 def get_scores():
 	#get scores from file
-	scores = {"name":0} #format must be like this (0 is the score)
-	scores = dict()
-	with open(filepath) as fp:
-        	line = fp.readline().strip()
-        	while line:
-        		temp = line.split(':')
-        		scores[temp[0]] = int(temp[1])
-        		line = fp.readline().strip()
-	#scores = {"name":0} #format must be like this (0 is the score)
+	scores = list()
+	with open(filepath) as file:
+		line = file.readline().strip()
+		while line:
+			temp = int(line)
+			scores.append(temp)
+			line = file.readline().strip()
 	return scores
 
-def add_score(name, score):
+def add_score(score):
 	#add to file
-	scores[name]=score
+	data = list()
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
-    		data = file.readlines()
-	temp = data.split(name+':'+str(scores[name])+'\n')
-	data = temp[0] + name+':'+str(score)+'\n' + temp[1]
+		line = file.readline().strip()
+		while line:
+			temp = int(line)
+			data.append(temp)
+			line = file.readline().strip()
+	if score > 0:
+		data.append(score)
+	data.sort(reverse = True)
+	if len(data) > 10:
+		data = data[:10]
+	scores = ''
+	for n in data:
+		scores += str(n) + '\n'
+	scores.strip()
 	with open(filepath, 'w') as file:
 		#writes back to file
-		file.write(data)
-	scores[name]=score
+		file.writelines(scores)
