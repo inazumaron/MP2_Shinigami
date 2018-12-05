@@ -306,11 +306,7 @@ def bullet_collision():
 	gui.update_life(shield_life, ship_life)
 	if ship_life <= 0:
 		gui.game_over(score,time_elapse)
-<<<<<<< HEAD
-		sc.add_score(time_elapse,score)
-=======
 		sc.add_score(score)
->>>>>>> 0ea248cd2325bd22d4840455da76482aa8b79f64
 
 #==========================================================================================#
 #									Input Check											   #
