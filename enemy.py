@@ -21,14 +21,14 @@ class Enemy_0(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%30 == 0 and time <= 1200:					###Shoots bullets every second.
+		if time%60 == 0 and time < 120:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
 			bullet.obj_vy = -10				###Initial velocity
 			bullet.obj_vx = 0
 			return bullet
-		elif time >= 1200 and time%20 == 0:					###Shoots bullets every 2/3 of a second.
+		elif time >= 120 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			
 			bullet.obj_y = self.y 			
@@ -36,7 +36,7 @@ class Enemy_0(object):
 			bullet.obj_vx = 0
 			return bullet	
 		else:
-			return None	
+			return None
 
 class Enemy_1(object):
 	"""Moves downwards on the left side of the screen."""
@@ -46,12 +46,12 @@ class Enemy_1(object):
 		self.y = 830						
 		self.life = 40						###Health
 		self.attack = "normal"				###Attack
-		self.damage = 10					###Damage
+		self.damage = 6					###Damage
 		self.cooldown = 10 					#Rate of fire
 		self.id = "easy_1"					###Identification
 		self.right = True					
 		self.time = time
-		self.points = 5						#Points
+		self.points = 8						#Points
 
 
 	def move(self):		
@@ -59,12 +59,12 @@ class Enemy_1(object):
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:					###Shoots bullets every 1/3 of a second.
+		if time%60 == 0:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
 			bullet.obj_vy = -10				###Initial velocity
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_vx = 0
 			return bullet
 		else:
 			return None	
@@ -78,12 +78,12 @@ class Enemy_2(object):
 		self.y = 800
 		self.life = 60
 		self.attack = "normal"
-		self.damage = 10
+		self.damage = 6
 		self.cooldown = 10 
 		self.id = "easy_2"
 		self.right = True
 		self.time = time
-		self.points = 8
+		self.points = 10
 		self.direction = 'counter-clockwise'
 		if x >= 300:
 			self.direction = 'clockwise'
@@ -110,7 +110,7 @@ class Enemy_2(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%30 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -128,12 +128,12 @@ class Enemy_3(object):
 		self.y = 300
 		self.life = 70
 		self.attack = "normal"
-		self.damage = 10
+		self.damage = 7
 		self.cooldown = 10 
 		self.id = "easy_3"
 		self.left = True
 		self.time = time
-		self.points = 12
+		self.points = 15
 		self.direction = 'right'
 		if x >= 300:
 			self.direction = 'left'
@@ -149,11 +149,11 @@ class Enemy_3(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
-			bullet.obj_vy = -10
+			bullet.obj_vy = -5
 			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
 			return bullet
 		else:
@@ -167,8 +167,8 @@ class Enemy_4(object):
 		self.y = 400
 		self.life = 80
 		self.attack = "normal"
-		self.damage = 10
-		self.cooldown = 15
+		self.damage = 7
+		self.cooldown = 10
 		self.id = "easy_4"
 		self.right = True
 		self.time = time
@@ -187,11 +187,11 @@ class Enemy_4(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
-			bullet.obj_vy = -10
+			bullet.obj_vy = -5
 			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
 			return bullet
 		else:
@@ -205,8 +205,8 @@ class Enemy_5(object):
 		self.y = y
 		self.life = 100
 		self.attack = "normal"
-		self.damage = 10
-		self.cooldown = 20
+		self.damage = 8
+		self.cooldown = 10
 		self.id = "med_1"
 		self.right = True
 		self.time = time
@@ -218,15 +218,22 @@ class Enemy_5(object):
 		return self	
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0 and time < 14400:					###Shoots bullets every second.
 			bullet = bull.bullet()
-			bullet.obj_x = self.x
-			bullet.obj_y = self.y
-			bullet.obj_vy = -10
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_x = self.x 			###Initial position
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				###Initial velocity
+			bullet.obj_vx = 0
 			return bullet
+		elif time >= 14400 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+			bullet = bull.bullet()
+			bullet.obj_x = self.x 			
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				
+			bullet.obj_vx = 0
+			return bullet	
 		else:
-			return None			
+			return None	
 
 class Enemy_6(object):
 	"""Moves on a zigzag pattern downwards."""
@@ -259,15 +266,22 @@ class Enemy_6(object):
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0 and time <= 18000:					###Shoots bullets every second.
 			bullet = bull.bullet()
-			bullet.obj_x = self.x
-			bullet.obj_y = self.y
-			bullet.obj_vy = -10
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_x = self.x 			###Initial position
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				###Initial velocity
+			bullet.obj_vx = 0
 			return bullet
+		elif time > 18000 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+			bullet = bull.bullet()
+			bullet.obj_x = self.x 			
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				
+			bullet.obj_vx = 0
+			return bullet	
 		else:
-			return None		
+			return None
 
 class Enemy_7(object):
 	"""Moves in a zigzag pattern downwards."""
@@ -300,15 +314,22 @@ class Enemy_7(object):
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0 and time <= 18000:					###Shoots bullets every second.
 			bullet = bull.bullet()
-			bullet.obj_x = self.x
-			bullet.obj_y = self.y
-			bullet.obj_vy = -10
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_x = self.x 			###Initial position
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				###Initial velocity
+			bullet.obj_vx = 0
 			return bullet
+		elif time > 18000 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+			bullet = bull.bullet()
+			bullet.obj_x = self.x 			
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				
+			bullet.obj_vx = 0
+			return bullet	
 		else:
-			return None		
+			return None	
 
 class Enemy_8(object):
 	"""Moves in a square pattern at the top half of the screen, either clockwise or
@@ -319,11 +340,9 @@ class Enemy_8(object):
 		self.y = 800
 		self.life = 100
 		self.attack = "normal"
-		self.damage = 20
-		self.cooldown = 20
+		self.damage = 10
+		self.cooldown = 10
 		self.id = "hard_1"
-		self.right = False
-		self.down = True
 		self.points = 65
 		self.direction = 'counter-clockwise'
 		if x >= 300:
@@ -351,7 +370,7 @@ class Enemy_8(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%20 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -369,7 +388,7 @@ class Enemy_9(object):			#	  _|_|
 		self.y = 575
 		self.life = 120
 		self.attack = "normal"
-		self.damage = 10
+		self.damage = 12
 		self.cooldown = 10
 		self.id = "hard_2"
 		self.right = True
@@ -402,15 +421,22 @@ class Enemy_9(object):			#	  _|_|
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0 and time <= 24000:					###Shoots bullets every second.
 			bullet = bull.bullet()
-			bullet.obj_x = self.x
-			bullet.obj_y = self.y
-			bullet.obj_vy = -10
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_x = self.x 			###Initial position
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				###Initial velocity
+			bullet.obj_vx = 0
 			return bullet
+		elif time > 24000 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+			bullet = bull.bullet()
+			bullet.obj_x = self.x 			
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				
+			bullet.obj_vx = 0
+			return bullet	
 		else:
-			return None				
+			return None			
 									# _
 class Enemy_10(object):				#|_|_
 	"""Moves in a slanted 8 pattern.   |_|"""
@@ -420,7 +446,7 @@ class Enemy_10(object):				#|_|_
 		self.y = 575
 		self.life = 120
 		self.attack = "normal"
-		self.damage = 10
+		self.damage = 15
 		self.cooldown = 10 
 		self.id = "hard_3"
 		self.right = False
@@ -451,12 +477,19 @@ class Enemy_10(object):				#|_|_
 		return self				
 
 	def shoot(self, time, player_point):
-		if time%10 == 0:
+		if time%60 == 0 and time <= 24000:					###Shoots bullets every second.
 			bullet = bull.bullet()
-			bullet.obj_x = self.x
-			bullet.obj_y = self.y
-			bullet.obj_vy = -10
-			bullet.obj_vx = (-self.x+player_point["x"])/player_point["y"]
+			bullet.obj_x = self.x 			###Initial position
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				###Initial velocity
+			bullet.obj_vx = 0
 			return bullet
+		elif time > 24000 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+			bullet = bull.bullet()
+			bullet.obj_x = self.x 			
+			bullet.obj_y = self.y 			
+			bullet.obj_vy = -10				
+			bullet.obj_vx = 0
+			return bullet	
 		else:
 			return None
