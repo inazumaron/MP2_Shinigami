@@ -16,11 +16,8 @@ class Enemy_0a(object):
 		self.id = 'easy_0'
 		self.points = 5
 
-	def move(self,time):
-		if time >= 1200:
-			self.y -= 4
-		else:	
-			self.y -= 2
+	def move(self):
+		self.y -= 2
 		return self
 
 	def shoot(self, time, player_point):
@@ -53,11 +50,8 @@ class Enemy_0b(object):
 		self.id = 'easy_0'
 		self.points = 5
 
-	def move(self, time):
-		if time >= 1200:
-			self.y -= 4
-		else:	
-			self.y -= 2
+	def move(self):
+		self.y -= 2
 		return self
 
 	def shoot(self, time, player_point):
@@ -90,11 +84,8 @@ class Enemy_0c(object):
 		self.id = 'easy_0'
 		self.points = 5
 
-	def move(self, time):
-		if time >= 1200:
-			self.y -= 4
-		else:	
-			self.y -= 2
+	def move(self):
+		self.y -= 2
 		return self
 
 	def shoot(self, time, player_point):
@@ -127,11 +118,8 @@ class Enemy_0d(object):
 		self.id = 'easy_0'
 		self.points = 5
 
-	def move(self, time):
-		if time >= 1200:
-			self.y -= 4
-		else:	
-			self.y -= 2
+	def move(self):
+		self.y -= 2
 		return self
 
 	def shoot(self, time, player_point):
@@ -164,11 +152,8 @@ class Enemy_0e(object):
 		self.id = 'easy_0'
 		self.points = 5
 
-	def move(self, time):
-		if time >= 1200:
-			self.y -= 4
-		else:	
-			self.y -= 2
+	def move(self):
+		self.y -= 2
 		return self
 
 	def shoot(self, time, player_point):
@@ -282,7 +267,7 @@ class Enemy_3(object):
 		self.points = 12
 
 
-	def move(self, time):	
+	def move(self):	
 		self.y += 4			
 		self.x -= 3
 		return self
@@ -314,7 +299,7 @@ class Enemy_4(object):
 		self.points = 20
 
 
-	def move(self, time):	
+	def move(self):	
 		self.y += 4
 		self.x += 3
 		return self
@@ -511,7 +496,7 @@ class Enemy_9(object):			#	  _|_|
 		self.down = False
 		self.points = 80
 
-	def move(self, time):		
+	def move(self):	
 		if self.y == 575 and self.x < 550 and not self.down:
 			self.x +=2.5
 
@@ -562,7 +547,7 @@ class Enemy_10(object):				#|_|_
 		self.down = False
 		self.points = 100
 
-	def move(self, time):		
+	def move(self):	
 		if self.y == 575 and self.x > 50 and not self.down:
 			self.x -=2.5
 
