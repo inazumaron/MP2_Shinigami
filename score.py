@@ -14,20 +14,6 @@ def get_scores():
 
 def add_score(score):
 	#add to file
-<<<<<<< HEAD
-	name = input("Input your name: ")
-	scores = get_scores()
-	scores[name]=score
-	with open(filepath, 'r') as file:
-		# read a list of lines into data
-    		data = file.readlines()
-	temp = ''.join(data).split(name+':'+str(scores[name])+'\n')
-	data = temp[0] + name+':'+str(score)+'\n' + temp[1]
-	with open(filepath, 'w') as file:
-		#writes back to file
-		file.add(data)
-	scores[name]=score
-=======
 	data = list()
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
@@ -48,4 +34,3 @@ def add_score(score):
 	with open(filepath, 'w') as file:
 		#writes back to file
 		file.writelines(scores)
->>>>>>> 0ea248cd2325bd22d4840455da76482aa8b79f64
