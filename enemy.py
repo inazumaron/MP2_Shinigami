@@ -149,7 +149,7 @@ class Enemy_3(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%60 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -187,7 +187,7 @@ class Enemy_4(object):
 		return self
 
 	def shoot(self, time, player_point):
-		if time%60 == 0:
+		if time%10 == 0:
 			bullet = bull.bullet()
 			bullet.obj_x = self.x
 			bullet.obj_y = self.y
@@ -218,7 +218,7 @@ class Enemy_5(object):
 		return self	
 
 	def shoot(self, time, player_point):
-		if time%60 == 0 and time < 14400:					###Shoots bullets every second.
+		if time%40 == 0 and time < 14400:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
@@ -266,7 +266,7 @@ class Enemy_6(object):
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%60 == 0 and time <= 18000:					###Shoots bullets every second.
+		if time%10 == 0 and time <= 18000:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
@@ -314,7 +314,7 @@ class Enemy_7(object):
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%60 == 0 and time <= 18000:					###Shoots bullets every second.
+		if time%10 == 0 and time <= 18000:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
@@ -421,7 +421,7 @@ class Enemy_9(object):			#	  _|_|
 		return self						
 
 	def shoot(self, time, player_point):
-		if time%60 == 0 and time <= 24000:					###Shoots bullets every second.
+		if time%20 == 0 and time <= 24000:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
@@ -477,14 +477,14 @@ class Enemy_10(object):				#|_|_
 		return self				
 
 	def shoot(self, time, player_point):
-		if time%60 == 0 and time <= 24000:					###Shoots bullets every second.
+		if time%40 == 0 and time <= 24000:					###Shoots bullets every second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			###Initial position
 			bullet.obj_y = self.y 			
 			bullet.obj_vy = -10				###Initial velocity
 			bullet.obj_vx = 0
 			return bullet
-		elif time > 24000 and time%40 == 0:					###Shoots bullets every 2/3 of a second.
+		elif time > 24000 and time%20 == 0:					###Shoots bullets every 2/3 of a second.
 			bullet = bull.bullet()
 			bullet.obj_x = self.x 			
 			bullet.obj_y = self.y 			
