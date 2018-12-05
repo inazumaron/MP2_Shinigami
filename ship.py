@@ -7,7 +7,7 @@ def ship_move(x,y,left,right,up,down,speed):
 	#Change coordinates as necessary
 	#check if outside boundary
 
-	if left and 50 < x: ###ship boundaries
+	if left and 50 < x: ###While the ship is still within the boundaries(50 < x < 550 and 50 < y < 750), move the ship by 'speed' distance.
 		x-=speed
 	elif right and x < 550:
 		x+=speed
@@ -33,12 +33,12 @@ def ship_gun(x,y,ex,ho,pi,dam):
 def ship_dash(x,y,left,right,up,down,modifiers,dis):
 	#modifiers=stats
 	#dahses to a certain direction
-	if left and up and x >= 100 and y <= 700:		###checks if there is enough distance from the boundary, then dashes left-up by 50
-		x -= dis
+	if left and up and x >= 100 and y <= 700:		###If the ship is at least 'dis' distance away from the boundary,
+		x -= dis 									### dash by 'dis' distance.
 		y += dis
 
-	elif left and up and x < 100 and y > 700:		###if dash distance goes over the boundary, just tp to the corner so it won't go out of bounds
-		x = 50
+	elif left and up and x < 100 and y > 700:		###If dash distance goes over the boundary
+		x = 50										###just teleport to the corner/side so it won't go out of bounds.	
 		y = 750
 
 	elif left and down and x >= 100 and y >= 100:
@@ -90,4 +90,3 @@ def ship_dash(x,y,left,right,up,down,modifiers,dis):
 		y = 50
 				
 	return [x,y]
-
