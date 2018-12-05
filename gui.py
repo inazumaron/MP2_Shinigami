@@ -166,7 +166,7 @@ def on_draw():
 
 			spr_enemy_list = []
 			for b in Enemy_list:
-				if b.id == "easy_1":
+				if b.id == "easy_1" or b.id == 'easy_0':#image of enemy row for now
 					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_1_image,x=b.x,y=b.y,group=group_foreground))
 				if b.id == "easy_2":
 					spr_enemy_list.append(pyglet.sprite.Sprite(img=resources.enemy_2_image,x=b.x,y=b.y,group=group_foreground))
@@ -211,10 +211,10 @@ def on_draw():
 	elif game_screen == 3: #score screen
 		game_window.clear()
 		game_background_2.draw()
-		temp = ''
+		temp = 'HIGHSCORES:\n'
 		scores = score.get_scores()
-		for i in sorted(scores):
-                        temp += str(i)+'\t'+str(scores[i])+'\n'
+		for i in range(0,len(scores)):
+			temp += str(i+1)+'.\t\t'+str(scores[i])+'\n'
 		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
                           font_size=24,
@@ -483,7 +483,10 @@ def reset_option():
 
 def game_over(score,time):
 	global g_o_text, game_screen
-	g_o_text += "Congratulations, you survived "+str(time)+" long"+"\n"+"With a score of "+str(score)
+	total_time_in_seconds = time//30
+	minutes = str(total_time_in_seconds//60)
+	seconds = str(total_time_in_seconds%60)
+	g_o_text += "Congratulations, you survived "+ minutes + ':' + '{:0>2}'.format(seconds) +" long"+"\n"+"With a score of "+str(score)
 	game_screen = 4
 
 def update_sword(x, y, angle, reach):
