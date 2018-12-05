@@ -4,8 +4,8 @@ import math
 import resources
 
 def bullet_action(bullet,target_list,time_elapse):
-	bullet.obj_x += bullet.obj_vx
-	bullet.obj_y += bullet.obj_vy
+	bullet.obj_x += bullet.obj_vx * bullet.sp_mod
+	bullet.obj_y += bullet.obj_vy * bullet.sp_mod
 	bullet.obj_vx += bullet.obj_ax
 	bullet.obj_vy += bullet.obj_ay
 	#Update bullet location
@@ -32,7 +32,7 @@ def bullet_action(bullet,target_list,time_elapse):
 			#resources.explosion_fx.play()
 			if bullet.modifiers["piercing"] == False:
 				bullet.destroy = True
-			target.life -= bullet.damage
+			target.life -= bullet.damage * bullet.dam_mod
 
 	return bullet
 
@@ -56,10 +56,6 @@ def melee_action(damage, range, target, x, y, angle):
 		if col.get_distance(x_2,y_2,b.x,b.y) <= 40:
 			b.life -= damage
 			print(b.life)
-		if b.life <= 0:
-			remove.append(b)
-	for b in remove:
-		target.remove(b)
 
 def explosion_action(exp, target_list):
 	for target in target_list:
@@ -78,6 +74,8 @@ class bullet(object):
 		self.modifiers = {"homing":False,"explosive":False,"piercing":False} #piercing,homing, etc
 		self.destroy = False
 		self.damage = 10
+		self.dam_mod = 1
+		self.sp_mod = 1
 
 class explosion(object):
 	def __init__(self):

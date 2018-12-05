@@ -22,9 +22,9 @@ def add_score(name, score):
 	with open(filepath, 'r') as file:
 		# read a list of lines into data
     		data = file.readlines()
-	temp = data.split(name+':'+str(scores[name])+'\n')
+	temp = ''.join(data).split(name+':'+str(scores[name])+'\n')
 	data = temp[0] + name+':'+str(score)+'\n' + temp[1]
 	with open(filepath, 'w') as file:
 		#writes back to file
-		file.write(data)
+		file.add(data)
 	scores[name]=score
