@@ -5,7 +5,7 @@ import bullet as bull
 import level as level
 import collision as col
 import random as r
-import score
+import score as sc
 
 #=====================================
 #Initializing variables for player input
@@ -293,7 +293,7 @@ def bullet_collision():
 	gui.update_life(shield_life, ship_life)
 	if ship_life <= 0:
 		gui.game_over(score,time_elapse)
-		score.add_score(time_elapse,score)
+		sc.add_score(score)
 
 #==========================================================================================#
 #									Input Check											   #
