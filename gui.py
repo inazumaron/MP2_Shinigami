@@ -192,8 +192,8 @@ def on_draw():
 		game_background_2.draw()
 		temp = ''
 		scores = score.get_scores()
-		for i in sorted(scores):
-                        temp += str(i)+'\t'+str(scores[i])+'\n'
+		for i in sorted(scores.keys()):
+                        temp += str(i)+'\t\t\t'+str(scores[i])+'\n'
 		label = pyglet.text.Label(temp.strip(),
                           font_name='Times New Roman',
                           font_size=24,
